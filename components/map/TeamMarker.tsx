@@ -123,21 +123,54 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
               fill="rgba(0,0,0,0.2)"
             />
 
-            {/* Team Short Name Text */}
-            <text
-              x="24"
-              y="28"
-              textAnchor="middle"
-              fill="white"
-              fontSize="11"
-              fontWeight="bold"
-              style={{
-                textShadow: '0 2px 4px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.8)',
-                fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
-              }}
-            >
-              {stadium.teamShortName}
-            </text>
+            {/* Team Name - Two Lines or Single */}
+            {stadium.teamDisplayLine1 && stadium.teamDisplayLine2 ? (
+              <>
+                <text
+                  x="24"
+                  y="22"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontWeight="bold"
+                  style={{
+                    textShadow: '0 2px 4px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.8)',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                  }}
+                >
+                  {stadium.teamDisplayLine1}
+                </text>
+                <text
+                  x="24"
+                  y="32"
+                  textAnchor="middle"
+                  fill="white"
+                  fontSize="10"
+                  fontWeight="bold"
+                  style={{
+                    textShadow: '0 2px 4px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.8)',
+                    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                  }}
+                >
+                  {stadium.teamDisplayLine2}
+                </text>
+              </>
+            ) : (
+              <text
+                x="24"
+                y="28"
+                textAnchor="middle"
+                fill="white"
+                fontSize="11"
+                fontWeight="bold"
+                style={{
+                  textShadow: '0 2px 4px rgba(0,0,0,0.8), 0 0 2px rgba(0,0,0,0.8)',
+                  fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+                }}
+              >
+                {stadium.teamShortName}
+              </text>
+            )}
           </svg>
 
           {/* League Type Badge */}

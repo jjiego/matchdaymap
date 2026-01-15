@@ -40,7 +40,7 @@ export default function Home() {
 
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false)
-    setMapLevel(13)
+    setMapLevel(6)
     setTimeout(() => setSelectedStadium(null), 300)
   }
 

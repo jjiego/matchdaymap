@@ -5,6 +5,8 @@ export interface Stadium {
   name: string
   teamName: string
   teamShortName: string // 팀 약자 (예: '서울', '전북', '울산')
+  teamDisplayLine1?: string // 마커에 표시될 첫 번째 줄 (예: '수원')
+  teamDisplayLine2?: string // 마커에 표시될 두 번째 줄 (예: 'FC')
   location: {
     lat: number
     lng: number

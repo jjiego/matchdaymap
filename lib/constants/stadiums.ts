@@ -2,224 +2,414 @@ import { Stadium } from '@/lib/types/stadium'
 
 export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   // K리그1 (2025시즌 - 12개 팀)
-  // 출처: 나무위키 K리그1, 각 팀 공식 홈페이지
+  // 출처: teams.json
   {
     id: 'fc-seoul',
     name: '서울월드컵경기장',
     teamName: 'FC서울',
     teamShortName: '서울',
+    teamDisplayLine1: 'FC',
+    teamDisplayLine2: '서울',
     location: { lat: 37.5682, lng: 126.8974 },
     primaryColor: '#C8102E', // 빨강
     secondaryColor: '#000000', // 검정
-    uniformPattern: 'vertical-stripe', // 전통적인 빨강/검정 수직 스트라이프
+    uniformPattern: 'vertical-stripe',
     leagueType: 1,
-    address: '서울특별시 마포구 월드컵로 240',
+    address: '서울 마포구 성산동 515',
   },
   {
     id: 'ulsan',
     name: '울산문수축구경기장',
-    teamName: '울산 HD',
+    teamName: '울산 HD FC',
     teamShortName: '울산',
+    teamDisplayLine1: '울산',
+    teamDisplayLine2: 'HD',
     location: { lat: 35.5352, lng: 129.2595 },
-    primaryColor: '#0066B3', // 파랑
-    secondaryColor: '#000000', // 검정
-    uniformPattern: 'solid', // 2025 단색 파랑 유니폼
+    primaryColor: '#0066B3', // 블루
+    secondaryColor: '#FFD700', // 옐로우
+    uniformPattern: 'vertical-stripe',
     leagueType: 1,
-    address: '울산광역시 남구 문수로 44',
+    address: '울산 남구 문수로 44',
   },
   {
     id: 'jeonbuk',
     name: '전주월드컵경기장',
     teamName: '전북 현대',
     teamShortName: '전북',
+    teamDisplayLine1: '전북',
+    teamDisplayLine2: '현대',
     location: { lat: 35.8681, lng: 127.0646 },
     primaryColor: '#00A651', // 녹색
     secondaryColor: '#000000', // 검정
-    uniformPattern: 'solid', // 단색 녹색
+    uniformPattern: 'solid',
     leagueType: 1,
-    address: '전북특별자치도 전주시 덕진구 기린대로 1055',
+    address: '전북 전주 덕진구 기린대로 1055',
   },
   {
     id: 'pohang',
     name: '포항스틸야드',
     teamName: '포항 스틸러스',
     teamShortName: '포항',
+    teamDisplayLine1: '포항',
+    teamDisplayLine2: '스틸',
     location: { lat: 35.9977, lng: 129.3844 },
-    primaryColor: '#E2231A', // 빨강
-    secondaryColor: '#000000', // 검정
-    uniformPattern: 'vertical-stripe', // 빨강/검정 수직 스트라이프
+    primaryColor: '#000000', // 검정
+    secondaryColor: '#E2231A', // 레드
+    uniformPattern: 'horizontal-stripe',
     leagueType: 1,
-    address: '경상북도 포항시 남구 대도동 305',
+    address: '경북 포항 남구 동촌동 707',
   },
   {
     id: 'daegu',
     name: 'DGB대구은행파크',
     teamName: '대구 FC',
     teamShortName: '대구',
+    teamDisplayLine1: '대구',
+    teamDisplayLine2: 'FC',
     location: { lat: 35.8810, lng: 128.5891 },
     primaryColor: '#87CEEB', // 하늘색
     secondaryColor: '#003DA5', // 네이비
-    uniformPattern: 'solid', // 하늘색 단색 (써드는 스트라이프)
-    leagueType: 1,
-    address: '대구광역시 수성구 유니버시아드로 180',
+    uniformPattern: 'solid',
+    leagueType: 2,
+    address: '대구 북구 고성로 191',
   },
   {
     id: 'gwangju',
-    name: '광주월드컵경기장',
+    name: '광주축구전용구장',
     teamName: '광주 FC',
     teamShortName: '광주',
+    teamDisplayLine1: '광주',
+    teamDisplayLine2: 'FC',
     location: { lat: 35.1335, lng: 126.8716 },
-    primaryColor: '#FFD700', // 노랑
-    secondaryColor: '#000000', // 검정
-    uniformPattern: 'solid', // 노랑 단색
+    primaryColor: '#FFD700', // 옐로우
+    secondaryColor: '#FF0000', // 레드
+    uniformPattern: 'diagonal-stripe',
     leagueType: 1,
-    address: '광주광역시 서구 금화로 240',
+    address: '광주 서구 금화로 240',
   },
   {
     id: 'gangwon',
-    name: '강릉종합운동장',
+    name: '강릉/춘천 종합운동장',
     teamName: '강원 FC',
     teamShortName: '강원',
+    teamDisplayLine1: '강원',
+    teamDisplayLine2: 'FC',
     location: { lat: 37.7556, lng: 128.8962 },
     primaryColor: '#FF6B00', // 주황
     secondaryColor: '#FFFFFF', // 흰색
-    uniformPattern: 'solid', // 주황 단색
+    uniformPattern: 'solid',
     leagueType: 1,
-    address: '강원특별자치도 강릉시 종합운동장길 46',
+    address: '강원 강릉시 종합운동장길 69',
   },
   {
     id: 'gimcheon',
-    name: '김천종합스포츠타운',
+    name: '김천종합운동장',
     teamName: '김천 상무',
     teamShortName: '김천',
+    teamDisplayLine1: '김천',
+    teamDisplayLine2: '상무',
     location: { lat: 36.1091, lng: 128.0920 },
-    primaryColor: '#C8102E', // 빨강
+    primaryColor: '#C8102E', // 레드
     secondaryColor: '#003478', // 네이비
-    uniformPattern: 'vertical-stripe', // 빨강/네이비 수직 스트라이프
+    uniformPattern: 'solid',
     leagueType: 1,
-    address: '경상북도 김천시 혁신6로 31',
+    address: '경북 김천시 운동장길 1',
   },
   {
     id: 'suwon-fc',
     name: '수원종합운동장',
     teamName: '수원 FC',
     teamShortName: '수원',
-    location: { lat: 37.2876, lng: 127.0369 },
+    teamDisplayLine1: '수원',
+    teamDisplayLine2: 'FC',
+    location: { lat: 37.2905, lng: 127.0186 },
     primaryColor: '#E31837', // 빨강
     secondaryColor: '#0033A0', // 파랑
-    uniformPattern: 'vertical-stripe', // 빨강/파랑 수직 스트라이프
-    leagueType: 1,
-    address: '경기도 수원시 장안구 조원로 134',
+    uniformPattern: 'vertical-stripe',
+    leagueType: 2,
+    address: '경기 수원 장안구 경수대로 893',
   },
   {
     id: 'jeju',
     name: '제주월드컵경기장',
     teamName: '제주 SK',
     teamShortName: '제주',
+    teamDisplayLine1: '제주',
+    teamDisplayLine2: 'SK',
     location: { lat: 33.2467, lng: 126.5093 },
     primaryColor: '#FF6600', // 오렌지
     secondaryColor: '#000000', // 검정
-    uniformPattern: 'solid', // 오렌지 단색
+    uniformPattern: 'solid',
     leagueType: 1,
-    address: '제주특별자치도 서귀포시 월드컵로 33',
+    address: '제주 서귀포 월드컵로 33',
   },
   {
     id: 'daejeon',
     name: '대전월드컵경기장',
     teamName: '대전 하나 시티즌',
     teamShortName: '대전',
+    teamDisplayLine1: '대전',
+    teamDisplayLine2: '하나',
     location: { lat: 36.3591, lng: 127.3218 },
     primaryColor: '#702F8A', // 자주색
     secondaryColor: '#FFFFFF', // 흰색
-    uniformPattern: 'solid', // 자주색 단색
+    uniformPattern: 'solid',
     leagueType: 1,
-    address: '대전광역시 유성구 노은동로 135',
+    address: '대전 유성구 월드컵대로 32',
   },
   {
     id: 'anyang',
     name: '안양종합운동장',
     teamName: 'FC 안양',
     teamShortName: '안양',
+    teamDisplayLine1: '안양',
+    teamDisplayLine2: 'FC',
     location: { lat: 37.4011, lng: 126.9281 },
     primaryColor: '#6C2785', // 자주색
     secondaryColor: '#FFFFFF', // 흰색
-    uniformPattern: 'solid', // 자주색 단색
+    uniformPattern: 'solid',
     leagueType: 1,
-    address: '경기도 안양시 만안구 안양로 131',
+    address: '경기 안양 동안구 비산동 1101',
   },
 
-  // K리그2 (2025시즌 - 주요 팀)
-  // 출처: 나무위키 K리그2, 각 팀 공식 홈페이지
+  // K리그2 (2025시즌 - 15개 팀)
+  // 출처: teams.json
   {
     id: 'busan',
     name: '부산아시아드주경기장',
     teamName: '부산 아이파크',
     teamShortName: '부산',
+    teamDisplayLine1: '부산',
+    teamDisplayLine2: '아이',
     location: { lat: 35.1904, lng: 129.0611 },
-    primaryColor: '#C8102E', // 빨강
-    secondaryColor: '#000000', // 검정
-    uniformPattern: 'solid', // 빨강 단색
+    primaryColor: '#C8102E', // 레드
+    secondaryColor: '#FFFFFF', // 화이트
+    uniformPattern: 'solid',
     leagueType: 2,
-    address: '부산광역시 연제구 월드컵대로 344',
+    address: '부산 연제구 월드컵대로 344',
   },
   {
     id: 'incheon',
     name: '인천축구전용경기장',
     teamName: '인천 유나이티드',
     teamShortName: '인천',
+    teamDisplayLine1: '인천',
+    teamDisplayLine2: '유나',
     location: { lat: 37.4662, lng: 126.6431 },
     primaryColor: '#000000', // 검정
     secondaryColor: '#0066B3', // 파랑
-    uniformPattern: 'vertical-stripe', // 검정/파랑 수직 스트라이프
-    leagueType: 2,
-    address: '인천광역시 중구 참외전로 246',
+    uniformPattern: 'vertical-stripe',
+    leagueType: 1,
+    address: '인천 중구 참외전로 246',
   },
   {
     id: 'cheonan',
     name: '천안종합운동장',
-    teamName: '천안 시티',
+    teamName: '천안 시티 FC',
     teamShortName: '천안',
+    teamDisplayLine1: '천안',
+    teamDisplayLine2: '시티',
     location: { lat: 36.8083, lng: 127.1508 },
     primaryColor: '#1E90FF', // 파랑
     secondaryColor: '#FFFFFF', // 흰색
-    uniformPattern: 'solid', // 파랑 단색
+    uniformPattern: 'solid',
     leagueType: 2,
-    address: '충청남도 천안시 서북구 두정역서6길 60',
+    address: '충남 천안 서북구 번영로 208',
   },
   {
     id: 'gyeongnam',
     name: '창원축구센터',
     teamName: '경남 FC',
     teamShortName: '경남',
+    teamDisplayLine1: '경남',
+    teamDisplayLine2: 'FC',
     location: { lat: 35.2108, lng: 128.5836 },
     primaryColor: '#FF0000', // 빨강
     secondaryColor: '#000000', // 검정
-    uniformPattern: 'solid', // 빨강 단색
+    uniformPattern: 'solid',
     leagueType: 2,
-    address: '경상남도 창원시 성산구 삼정자로 72',
+    address: '경남 창원 성산구 비음로 97',
   },
   {
     id: 'bucheon',
     name: '부천종합운동장',
     teamName: '부천 FC 1995',
     teamShortName: '부천',
+    teamDisplayLine1: '부천',
+    teamDisplayLine2: 'FC',
     location: { lat: 37.5033, lng: 126.7819 },
-    primaryColor: '#0066CC', // 파랑
-    secondaryColor: '#FFD700', // 노랑
-    uniformPattern: 'solid', // 파랑 단색
-    leagueType: 2,
-    address: '경기도 부천시 원미구 약대동 95',
+    primaryColor: '#C8102E', // 레드
+    secondaryColor: '#000000', // 검정
+    uniformPattern: 'horizontal-stripe',
+    leagueType: 1,
+    address: '경기 부천 원미구 길주로 486',
   },
   {
     id: 'suwon-bluewings',
     name: '수원월드컵경기장',
-    teamName: '수원 삼성 블루윙즈',
+    teamName: '수원 삼성',
     teamShortName: '삼성',
+    teamDisplayLine1: '수원',
+    teamDisplayLine2: '삼성',
     location: { lat: 37.2869, lng: 127.0369 },
-    primaryColor: '#0066CC', // 파랑
-    secondaryColor: '#FFFFFF', // 흰색
-    uniformPattern: 'solid', // 파랑 단색
+    primaryColor: '#0066CC', // 블루
+    secondaryColor: '#FF0000', // 레드
+    uniformPattern: 'gradient',
     leagueType: 2,
-    address: '경기도 수원시 팔달구 월드컵로 310',
+    address: '경기 수원 팔달구 월드컵로 310',
+  },
+  {
+    id: 'seoul-eland',
+    name: '목동종합운동장',
+    teamName: '서울 이랜드 FC',
+    teamShortName: '이랜드',
+    teamDisplayLine1: '이랜드',
+    teamDisplayLine2: 'FC',
+    location: { lat: 37.5265, lng: 126.8753 },
+    primaryColor: '#003478', // 네이비
+    secondaryColor: '#FFD700', // 골드
+    uniformPattern: 'solid',
+    leagueType: 2,
+    address: '서울 양천구 안양천로 939',
+  },
+  {
+    id: 'jeonnam',
+    name: '광양축구전용구장',
+    teamName: '전남 드래곤즈',
+    teamShortName: '전남',
+    teamDisplayLine1: '전남',
+    teamDisplayLine2: '드래곤',
+    location: { lat: 34.9404, lng: 127.6978 },
+    primaryColor: '#FFD700', // 옐로우
+    secondaryColor: '#000000', // 검정
+    uniformPattern: 'vertical-stripe',
+    leagueType: 2,
+    address: '전남 광양시 제철로 1655',
+  },
+  {
+    id: 'yongin',
+    name: '용인미르스타디움',
+    teamName: '용인 FC',
+    teamShortName: '용인',
+    teamDisplayLine1: '용인',
+    teamDisplayLine2: 'FC',
+    location: { lat: 37.2911, lng: 127.1141 },
+    primaryColor: '#FFD700', // 옐로우
+    secondaryColor: '#800080', // 퍼플
+    uniformPattern: 'diagonal-stripe',
+    leagueType: 2,
+    address: '경기 용인 처인구 동백죽전대로 61',
+  },
+  {
+    id: 'gimhae',
+    name: '김해운동장',
+    teamName: '김해 FC',
+    teamShortName: '김해',
+    teamDisplayLine1: '김해',
+    teamDisplayLine2: 'FC',
+    location: { lat: 35.2404, lng: 128.8897 },
+    primaryColor: '#0066B3', // 파랑
+    secondaryColor: '#FFFFFF',
+    uniformPattern: 'solid',
+    leagueType: 2,
+    address: '경남 김해시 가야로 245',
+  },
+  {
+    id: 'hwaseong',
+    name: '화성종합경기타운',
+    teamName: '화성 FC',
+    teamShortName: '화성',
+    teamDisplayLine1: '화성',
+    teamDisplayLine2: 'FC',
+    location: { lat: 37.1945, lng: 126.8145 },
+    primaryColor: '#FF6600', // 오렌지
+    secondaryColor: '#FFFFFF', // 화이트
+    uniformPattern: 'gradient',
+    leagueType: 2,
+    address: '경기 화성 향남읍 향남로 470',
+  },
+  {
+    id: 'paju',
+    name: '파주스타디움',
+    teamName: '파주 프런티어',
+    teamShortName: '파주',
+    teamDisplayLine1: '파주',
+    teamDisplayLine2: '프런',
+    location: { lat: 37.7599, lng: 126.7800 },
+    primaryColor: '#FF6600', // 오렌지
+    secondaryColor: '#000000',
+    uniformPattern: 'solid',
+    leagueType: 2,
+    address: '경기 파주시 중앙로 160',
+  },
+  {
+    id: 'chungbuk',
+    name: '청주종합운동장',
+    teamName: '충북 청주 FC',
+    teamShortName: '청주',
+    teamDisplayLine1: '청주',
+    teamDisplayLine2: 'FC',
+    location: { lat: 36.6283, lng: 127.4532 },
+    primaryColor: '#E31837', // 빨강
+    secondaryColor: '#000000',
+    uniformPattern: 'solid',
+    leagueType: 2,
+    address: '충북 청주시 사직동 152',
+  },
+  {
+    id: 'asan',
+    name: '이순신종합운동장',
+    teamName: '충남 아산 FC',
+    teamShortName: '아산',
+    teamDisplayLine1: '아산',
+    teamDisplayLine2: 'FC',
+    location: { lat: 36.7904, lng: 127.0016 },
+    primaryColor: '#702F8A', // 자주
+    secondaryColor: '#FFFFFF',
+    uniformPattern: 'solid',
+    leagueType: 2,
+    address: '충남 아산시 남부대로 370',
+  },
+  {
+    id: 'seongnam',
+    name: '탄천종합운동장',
+    teamName: '성남 FC',
+    teamShortName: '성남',
+    teamDisplayLine1: '성남',
+    teamDisplayLine2: 'FC',
+    location: { lat: 37.3963, lng: 127.1283 },
+    primaryColor: '#FFD700', // 노랑
+    secondaryColor: '#000000',
+    uniformPattern: 'solid',
+    leagueType: 2,
+    address: '경기 성남 분당구 판교로 461',
+  },
+  {
+    id: 'ansan',
+    name: '안산와~스타디움',
+    teamName: '안산 그리너스',
+    teamShortName: '안산',
+    teamDisplayLine1: '안산',
+    teamDisplayLine2: '그린',
+    location: { lat: 37.3218, lng: 126.8308 },
+    primaryColor: '#00A651', // 녹색
+    secondaryColor: '#FFFFFF',
+    uniformPattern: 'solid',
+    leagueType: 2,
+    address: '경기 안산 단원구 화랑로 260',
+  },
+  {
+    id: 'gimpo',
+    name: '김포솔터축구장',
+    teamName: '김포 FC',
+    teamShortName: '김포',
+    teamDisplayLine1: '김포',
+    teamDisplayLine2: 'FC',
+    location: { lat: 37.6150, lng: 126.7157 },
+    primaryColor: '#0066CC', // 파랑
+    secondaryColor: '#FFFFFF',
+    uniformPattern: 'solid',
+    leagueType: 2,
+    address: '경기 김포 마산동 673-1',
   },
 ]
