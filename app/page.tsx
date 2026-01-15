@@ -13,6 +13,7 @@ export default function Home() {
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [mapCenter, setMapCenter] = useState({ lat: 36.5, lng: 127.5 })
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
+  const [mapLevel, setMapLevel] = useState(13)
 
   // Get user's current location
   useEffect(() => {
@@ -34,16 +35,19 @@ export default function Home() {
     setSelectedStadium(stadium)
     setIsDrawerOpen(true)
     setMapCenter({ lat: stadium.location.lat, lng: stadium.location.lng })
+    setMapLevel(3)
   }
 
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false)
+    setMapLevel(13)
     setTimeout(() => setSelectedStadium(null), 300)
   }
 
   const handleRecenter = () => {
     if (userLocation) {
       setMapCenter(userLocation)
+      setMapLevel(7)
     }
   }
 
@@ -57,12 +61,22 @@ export default function Home() {
             <p className="text-sm text-white/80 drop-shadow">K리그 직관 가이드</p>
           </div>
           {userLocation && (
-            <button
-              onClick={handleRecenter}
-              className="p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-colors"
-            >
-              <MapPin className="w-5 h-5 text-primary" />
-            </button>
+            <div className="flex flex-col gap-2">
+              <button
+                onClick={handleRecenter}
+                className="p-3 bg-blue-500 backdrop-blur-sm rounded-full shadow-lg hover:bg-blue-600 transition-colors"
+                title="현재 위치로 이동"
+              >
+                <MapPin className="w-5 h-5 text-white" />
+              </button>
+              <button
+                onClick={handleRecenter}
+                className="p-3 bg-blue-600 backdrop-blur-sm rounded-full shadow-lg hover:bg-blue-700 transition-colors"
+                title="내 위치 찾기"
+              >
+                <Navigation className="w-5 h-5 text-white" />
+              </button>
+            </div>
           )}
         </div>
       </div>
@@ -71,7 +85,7 @@ export default function Home() {
       <Map
         center={mapCenter}
         style={{ width: '100%', height: '100%' }}
-        level={13}
+        level={mapLevel}
         isPanto={true}
       >
         {K_LEAGUE_FULL_STADIUMS.map((stadium) => (
