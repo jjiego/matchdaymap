@@ -1,0 +1,121 @@
+'use client'
+
+import { useState, useEffect } from 'react'
+import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk'
+import TeamMarker from '@/components/map/TeamMarker'
+import StadiumDrawer from '@/components/stadium/StadiumDrawer'
+import { K_LEAGUE_FULL_STADIUMS } from '@/lib/constants/stadiums'
+import { Stadium } from '@/lib/types/stadium'
+import { MapPin, Navigation } from 'lucide-react'
+
+export default function Home() {
+  const [selectedStadium, setSelectedStadium] = useState<Stadium | null>(null)
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false)
+  const [mapCenter, setMapCenter] = useState({ lat: 36.5, lng: 127.5 })
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
+
+  // Get user's current location
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords
+          setUserLocation({ lat: latitude, lng: longitude })
+          setMapCenter({ lat: latitude, lng: longitude })
+        },
+        (error) => {
+          console.log('Location permission denied or unavailable:', error)
+        }
+      )
+    }
+  }, [])
+
+  const handleMarkerClick = (stadium: Stadium) => {
+    setSelectedStadium(stadium)
+    setIsDrawerOpen(true)
+    setMapCenter({ lat: stadium.location.lat, lng: stadium.location.lng })
+  }
+
+  const handleCloseDrawer = () => {
+    setIsDrawerOpen(false)
+    setTimeout(() => setSelectedStadium(null), 300)
+  }
+
+  const handleRecenter = () => {
+    if (userLocation) {
+      setMapCenter(userLocation)
+    }
+  }
+
+  return (
+    <main className="relative w-full h-screen overflow-hidden">
+      {/* Header */}
+      <div className="absolute top-0 left-0 right-0 z-10 bg-gradient-to-b from-black/60 to-transparent p-4">
+        <div className="flex items-center justify-between">
+          <div>
+            <h1 className="text-2xl font-bold text-white drop-shadow-lg">매치데이맵</h1>
+            <p className="text-sm text-white/80 drop-shadow">K리그 직관 가이드</p>
+          </div>
+          {userLocation && (
+            <button
+              onClick={handleRecenter}
+              className="p-3 bg-white/90 backdrop-blur-sm rounded-full shadow-lg hover:bg-white transition-colors"
+            >
+              <MapPin className="w-5 h-5 text-primary" />
+            </button>
+          )}
+        </div>
+      </div>
+
+      {/* Map */}
+      <Map
+        center={mapCenter}
+        style={{ width: '100%', height: '100%' }}
+        level={13}
+        isPanto={true}
+      >
+        {K_LEAGUE_FULL_STADIUMS.map((stadium) => (
+          <TeamMarker
+            key={stadium.id}
+            stadium={stadium}
+            onClick={handleMarkerClick}
+            isSelected={selectedStadium?.id === stadium.id}
+          />
+        ))}
+
+        {/* User Location Marker */}
+        {userLocation && (
+          <CustomOverlayMap position={userLocation} yAnchor={0.5}>
+            <div className="relative flex items-center justify-center">
+              <div className="absolute w-12 h-12 bg-blue-500/20 rounded-full animate-ping" />
+              <div className="relative w-8 h-8 bg-blue-500 rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+                <Navigation className="w-4 h-4 text-white" />
+              </div>
+            </div>
+          </CustomOverlayMap>
+        )}
+      </Map>
+
+      {/* Stadium Detail Drawer */}
+      <StadiumDrawer
+        stadium={selectedStadium}
+        isOpen={isDrawerOpen}
+        onClose={handleCloseDrawer}
+      />
+
+      {/* Legend */}
+      <div className="absolute bottom-6 left-4 z-10 bg-card/95 backdrop-blur-sm rounded-xl p-3 shadow-lg">
+        <div className="flex items-center gap-3 text-xs">
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-[#FFD700]" />
+            <span>K리그1</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <div className="w-3 h-3 rounded-full bg-[#C0C0C0]" />
+            <span>K리그2</span>
+          </div>
+        </div>
+      </div>
+    </main>
+  )
+}
