@@ -10,7 +10,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '서울',
     teamDisplayLine1: 'FC',
     teamDisplayLine2: '서울',
-    location: { lat: 37.5682, lng: 126.8974 },
+    location: { lat: 37.568256, lng: 126.89724 },
     primaryColor: '#C8102E', // 빨강
     secondaryColor: '#000000', // 검정
     uniformPattern: 'vertical-stripe',
@@ -24,7 +24,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '울산',
     teamDisplayLine1: '울산',
     teamDisplayLine2: 'HD',
-    location: { lat: 35.5352, lng: 129.2595 },
+    location: { lat: 35.535299, lng: 129.259501 },
     primaryColor: '#0066B3', // 블루
     secondaryColor: '#FFD700', // 옐로우
     uniformPattern: 'vertical-stripe',
@@ -38,7 +38,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '전북',
     teamDisplayLine1: '전북',
     teamDisplayLine2: '현대',
-    location: { lat: 35.8681, lng: 127.0646 },
+    location: { lat: 35.868112, lng: 127.064431 },
     primaryColor: '#00A651', // 녹색
     secondaryColor: '#000000', // 검정
     uniformPattern: 'solid',
@@ -52,7 +52,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '포항',
     teamDisplayLine1: '포항',
     teamDisplayLine2: '스틸',
-    location: { lat: 35.9977, lng: 129.3844 },
+    location: { lat: 35.997701, lng: 129.384351 },
     primaryColor: '#000000', // 검정
     secondaryColor: '#E2231A', // 레드
     uniformPattern: 'horizontal-stripe',
@@ -66,7 +66,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '대구',
     teamDisplayLine1: '대구',
     teamDisplayLine2: 'FC',
-    location: { lat: 35.8810, lng: 128.5891 },
+    location: { lat: 35.881251, lng: 128.588231 },
     primaryColor: '#87CEEB', // 하늘색
     secondaryColor: '#003DA5', // 네이비
     uniformPattern: 'solid',
@@ -80,7 +80,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '광주',
     teamDisplayLine1: '광주',
     teamDisplayLine2: 'FC',
-    location: { lat: 35.1335, lng: 126.8716 },
+    location: { lat: 35.131051, lng: 126.875132 },
     primaryColor: '#FFD700', // 옐로우
     secondaryColor: '#FF0000', // 레드
     uniformPattern: 'diagonal-stripe',
@@ -94,7 +94,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '강원',
     teamDisplayLine1: '강원',
     teamDisplayLine2: 'FC',
-    location: { lat: 37.7556, lng: 128.8962 },
+    location: { lat: 37.773733, lng: 128.897451 },
     primaryColor: '#FF6B00', // 주황
     secondaryColor: '#FFFFFF', // 흰색
     uniformPattern: 'solid',
@@ -108,7 +108,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '김천',
     teamDisplayLine1: '김천',
     teamDisplayLine2: '상무',
-    location: { lat: 36.1091, lng: 128.0920 },
+    location: { lat: 36.139441, lng: 128.086321 },
     primaryColor: '#C8102E', // 레드
     secondaryColor: '#003478', // 네이비
     uniformPattern: 'solid',
@@ -119,10 +119,10 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     id: 'suwon-fc',
     name: '수원종합운동장',
     teamName: '수원 FC',
-    teamShortName: '수원',
+    teamShortName: '수원FC',
     teamDisplayLine1: '수원',
     teamDisplayLine2: 'FC',
-    location: { lat: 37.2905, lng: 127.0186 },
+    location: { lat: 37.297741, lng: 127.011321 },
     primaryColor: '#E31837', // 빨강
     secondaryColor: '#0033A0', // 파랑
     uniformPattern: 'vertical-stripe',
@@ -136,7 +136,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '제주',
     teamDisplayLine1: '제주',
     teamDisplayLine2: 'SK',
-    location: { lat: 33.2467, lng: 126.5093 },
+    location: { lat: 33.246189, lng: 126.509301 },
     primaryColor: '#FF6600', // 오렌지
     secondaryColor: '#000000', // 검정
     uniformPattern: 'solid',
@@ -150,7 +150,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '대전',
     teamDisplayLine1: '대전',
     teamDisplayLine2: '하나',
-    location: { lat: 36.3591, lng: 127.3218 },
+    location: { lat: 36.365311, lng: 127.325021 },
     primaryColor: '#702F8A', // 자주색
     secondaryColor: '#FFFFFF', // 흰색
     uniformPattern: 'solid',
@@ -164,7 +164,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '안양',
     teamDisplayLine1: '안양',
     teamDisplayLine2: 'FC',
-    location: { lat: 37.4011, lng: 126.9281 },
+    location: { lat: 37.405351, lng: 126.946401 },
     primaryColor: '#6C2785', // 자주색
     secondaryColor: '#FFFFFF', // 흰색
     uniformPattern: 'solid',
@@ -181,7 +181,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '부산',
     teamDisplayLine1: '부산',
     teamDisplayLine2: '아이',
-    location: { lat: 35.1904, lng: 129.0611 },
+    location: { lat: 35.190101, lng: 129.058351 },
     primaryColor: '#C8102E', // 레드
     secondaryColor: '#FFFFFF', // 화이트
     uniformPattern: 'solid',
@@ -195,7 +195,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '인천',
     teamDisplayLine1: '인천',
     teamDisplayLine2: '유나',
-    location: { lat: 37.4662, lng: 126.6431 },
+    location: { lat: 37.466021, lng: 126.643051 },
     primaryColor: '#000000', // 검정
     secondaryColor: '#0066B3', // 파랑
     uniformPattern: 'vertical-stripe',
@@ -237,7 +237,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '부천',
     teamDisplayLine1: '부천',
     teamDisplayLine2: 'FC',
-    location: { lat: 37.5033, lng: 126.7819 },
+    location: { lat: 37.502551, lng: 126.798931 },
     primaryColor: '#C8102E', // 레드
     secondaryColor: '#000000', // 검정
     uniformPattern: 'horizontal-stripe',
@@ -251,7 +251,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '삼성',
     teamDisplayLine1: '수원',
     teamDisplayLine2: '삼성',
-    location: { lat: 37.2869, lng: 127.0369 },
+    location: { lat: 37.286511, lng: 127.036851 },
     primaryColor: '#0066CC', // 블루
     secondaryColor: '#FF0000', // 레드
     uniformPattern: 'gradient',
@@ -262,10 +262,10 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     id: 'seoul-eland',
     name: '목동종합운동장',
     teamName: '서울 이랜드 FC',
-    teamShortName: '이랜드',
-    teamDisplayLine1: '이랜드',
+    teamShortName: '서울E',
+    teamDisplayLine1: '서울E',
     teamDisplayLine2: 'FC',
-    location: { lat: 37.5265, lng: 126.8753 },
+    location: { lat: 37.530611, lng: 126.883021 },
     primaryColor: '#003478', // 네이비
     secondaryColor: '#FFD700', // 골드
     uniformPattern: 'solid',
@@ -279,7 +279,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '전남',
     teamDisplayLine1: '전남',
     teamDisplayLine2: '드래곤',
-    location: { lat: 34.9404, lng: 127.6978 },
+    location: { lat: 34.933151, lng: 127.727501 },
     primaryColor: '#FFD700', // 옐로우
     secondaryColor: '#000000', // 검정
     uniformPattern: 'vertical-stripe',
@@ -293,7 +293,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '용인',
     teamDisplayLine1: '용인',
     teamDisplayLine2: 'FC',
-    location: { lat: 37.2911, lng: 127.1141 },
+    location: { lat: 37.249701, lng: 127.165151 },
     primaryColor: '#FFD700', // 옐로우
     secondaryColor: '#800080', // 퍼플
     uniformPattern: 'diagonal-stripe',
@@ -307,7 +307,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '김해',
     teamDisplayLine1: '김해',
     teamDisplayLine2: 'FC',
-    location: { lat: 35.2404, lng: 128.8897 },
+    location: { lat: 35.255651, lng: 128.877132 },
     primaryColor: '#0066B3', // 파랑
     secondaryColor: '#FFFFFF',
     uniformPattern: 'solid',
@@ -321,7 +321,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '화성',
     teamDisplayLine1: '화성',
     teamDisplayLine2: 'FC',
-    location: { lat: 37.1945, lng: 126.8145 },
+    location: { lat: 37.137351, lng: 126.924701 },
     primaryColor: '#FF6600', // 오렌지
     secondaryColor: '#FFFFFF', // 화이트
     uniformPattern: 'gradient',
@@ -335,7 +335,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '파주',
     teamDisplayLine1: '파주',
     teamDisplayLine2: '프런',
-    location: { lat: 37.7599, lng: 126.7800 },
+    location: { lat: 37.756151, lng: 126.786521 },
     primaryColor: '#FF6600', // 오렌지
     secondaryColor: '#000000',
     uniformPattern: 'solid',
@@ -377,7 +377,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamShortName: '성남',
     teamDisplayLine1: '성남',
     teamDisplayLine2: 'FC',
-    location: { lat: 37.3963, lng: 127.1283 },
+    location: { lat: 37.410101, lng: 127.120451 },
     primaryColor: '#FFD700', // 노랑
     secondaryColor: '#000000',
     uniformPattern: 'solid',

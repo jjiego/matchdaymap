@@ -33,20 +33,12 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
 
   return (
     <>
-      {/* Backdrop */}
+      {/* Drawer - no backdrop to allow map interaction */}
       <div
-        className={`fixed inset-0 bg-black/20 backdrop-blur-sm z-40 transition-opacity duration-300 ${
-          isOpen ? 'opacity-100' : 'opacity-0 pointer-events-none'
-        }`}
-        onClick={onClose}
-      />
-
-      {/* Drawer */}
-      <div
-        className={`fixed bottom-0 left-0 right-0 bg-slate-50/90 backdrop-blur-sm rounded-t-3xl shadow-2xl z-50 transition-transform duration-300 ease-out text-slate-900 ${
+        className={`fixed bottom-0 left-0 right-0 bg-slate-50/95 backdrop-blur-sm rounded-t-3xl shadow-2xl z-50 transition-transform duration-300 ease-out text-slate-900 ${
           isOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
-        style={{ maxHeight: '42vh' }}
+        style={{ maxHeight: '45vh' }}
       >
         {/* Handle Bar */}
         <div className="flex justify-center pt-3 pb-2">
@@ -54,7 +46,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
         </div>
 
         {/* Content */}
-        <div className="px-6 pb-6 overflow-y-auto" style={{ maxHeight: 'calc(42vh - 60px)' }}>
+        <div className="px-6 pb-6 overflow-y-auto" style={{ maxHeight: 'calc(45vh - 60px)' }}>
           {/* Close Button */}
           <button
             onClick={onClose}
