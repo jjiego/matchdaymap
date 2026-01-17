@@ -5,7 +5,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   // 출처: teams.json
   {
     id: 'fc-seoul',
-    name: '서울월드컵경기장',
+    name: '서울 월드컵',
+    fullName: '서울월드컵경기장',
     teamName: 'FC서울',
     teamShortName: '서울',
     teamDisplayLine1: 'FC',
@@ -19,7 +20,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'ulsan',
-    name: '울산문수축구경기장',
+    name: '울산 문수',
+    fullName: '울산문수축구경기장',
     teamName: '울산 HD FC',
     teamShortName: '울산',
     teamDisplayLine1: '울산',
@@ -33,7 +35,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'jeonbuk',
-    name: '전주월드컵경기장',
+    name: '전주 월드컵',
+    fullName: '전주월드컵경기장',
     teamName: '전북 현대',
     teamShortName: '전북',
     teamDisplayLine1: '전북',
@@ -47,7 +50,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'pohang',
-    name: '포항스틸야드',
+    name: '포항 스틸야드',
+    fullName: '포항스틸야드',
     teamName: '포항 스틸러스',
     teamShortName: '포항',
     teamDisplayLine1: '포항',
@@ -75,7 +79,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'gwangju',
-    name: '광주축구전용구장',
+    name: '광주 월드컵',
+    fullName: '광주축구전용구장',
     teamName: '광주 FC',
     teamShortName: '광주',
     teamDisplayLine1: '광주',
@@ -89,7 +94,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'gangwon',
-    name: '강릉/춘천 종합운동장',
+    name: '강릉하이원아레나',
+    fullName: '강릉/춘천 종합운동장',
     teamName: '강원 FC',
     teamShortName: '강원',
     teamDisplayLine1: '강원',
@@ -103,7 +109,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'gimcheon',
-    name: '김천종합운동장',
+    name: '김천 종합',
+    fullName: '김천종합운동장',
     teamName: '김천 상무',
     teamShortName: '김천',
     teamDisplayLine1: '김천',
@@ -131,7 +138,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'jeju',
-    name: '제주월드컵경기장',
+    name: '제주 월드컵',
+    fullName: '제주월드컵경기장',
     teamName: '제주 SK',
     teamShortName: '제주',
     teamDisplayLine1: '제주',
@@ -145,7 +153,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'daejeon',
-    name: '대전월드컵경기장',
+    name: '대전 월드컵',
+    fullName: '대전월드컵경기장',
     teamName: '대전 하나 시티즌',
     teamShortName: '대전',
     teamDisplayLine1: '대전',
@@ -159,7 +168,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'anyang',
-    name: '안양종합운동장',
+    name: '안양 종합',
+    fullName: '안양종합운동장',
     teamName: 'FC 안양',
     teamShortName: '안양',
     teamDisplayLine1: '안양',
@@ -190,7 +200,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'incheon',
-    name: '인천축구전용경기장',
+    name: '인천 전용',
+    fullName: '인천축구전용경기장',
     teamName: '인천 유나이티드',
     teamShortName: '인천',
     teamDisplayLine1: '인천',
@@ -232,7 +243,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
   },
   {
     id: 'bucheon',
-    name: '부천종합운동장',
+    name: '부천 종합',
+    fullName: '부천종합운동장',
     teamName: '부천 FC 1995',
     teamShortName: '부천',
     teamDisplayLine1: '부천',

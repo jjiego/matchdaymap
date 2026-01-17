@@ -2,7 +2,8 @@ export type UniformPattern = 'solid' | 'vertical-stripe' | 'horizontal-stripe' |
 
 export interface Stadium {
   id: string
-  name: string
+  name: string // DB 매칭용 짧은 이름 (예: '서울 월드컵', '울산 문수')
+  fullName?: string // 전체 경기장 이름 (예: '서울월드컵경기장', '울산문수축구경기장')
   teamName: string
   teamShortName: string // 팀 약자 (예: '서울', '전북', '울산')
   teamDisplayLine1?: string // 마커에 표시될 첫 번째 줄 (예: '수원')

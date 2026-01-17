@@ -7,6 +7,7 @@ import StadiumDrawer from '@/components/stadium/StadiumDrawer'
 import { K_LEAGUE_FULL_STADIUMS } from '@/lib/constants/stadiums'
 import { Stadium } from '@/lib/types/stadium'
 import { Map as MapIcon, Navigation } from 'lucide-react'
+import { debugStadiumNames } from '@/lib/supabase/debug'
 
 export default function Home() {
   const [selectedStadium, setSelectedStadium] = useState<Stadium | null>(null)
@@ -15,6 +16,7 @@ export default function Home() {
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
   const [mapLevel, setMapLevel] = useState(13)
   const [map, setMap] = useState<any>(null)
+  const [leagueFilter, setLeagueFilter] = useState<'all' | 1 | 2>('all')
 
   // Get user's current location
   useEffect(() => {
@@ -30,6 +32,12 @@ export default function Home() {
         }
       )
     }
+
+    // 디버그: DB의 모든 경기장 이름 출력
+    debugStadiumNames().then(() => {
+      console.log('=== 앱에 등록된 경기장 이름 ===')
+      K_LEAGUE_FULL_STADIUMS.forEach(s => console.log(s.name))
+    })
   }, [])
 
   const handleMarkerClick = (stadium: Stadium) => {
@@ -110,7 +118,10 @@ export default function Home() {
         isPanto={true}
         onCreate={setMap}
       >
-        {K_LEAGUE_FULL_STADIUMS.map((stadium) => (
+        {K_LEAGUE_FULL_STADIUMS.filter((stadium) => {
+          if (leagueFilter === 'all') return true
+          return stadium.leagueType === leagueFilter
+        }).map((stadium) => (
           <TeamMarker
             key={stadium.id}
             stadium={stadium}
@@ -139,21 +150,45 @@ export default function Home() {
         onClose={handleCloseDrawer}
       />
 
-      {/* Legend - moves up when drawer is open */}
+      {/* League Filter Buttons - moves up when drawer is open */}
       <div
-        className={`absolute left-4 z-10 bg-white/95 backdrop-blur-sm rounded-xl p-3 shadow-lg transition-all duration-300 ${
-          isDrawerOpen ? 'bottom-[calc(45vh+16px)]' : 'bottom-6'
+        className={`absolute left-4 z-10 bg-white/95 backdrop-blur-sm rounded-xl p-2 shadow-lg transition-all duration-300 ${
+          isDrawerOpen ? 'bottom-[calc(50vh+16px)]' : 'bottom-6'
         }`}
       >
-        <div className="flex items-center gap-3 text-xs text-gray-700">
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-[#FFD700]" />
-            <span>K리그1</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <div className="w-3 h-3 rounded-full bg-[#C0C0C0]" />
-            <span>K리그2</span>
-          </div>
+        <div className="flex flex-col gap-2">
+          <button
+            onClick={() => setLeagueFilter('all')}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
+              leagueFilter === 'all'
+                ? 'bg-gradient-to-r from-[#FFD700] to-[#C0C0C0] text-white shadow-md'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            전체
+          </button>
+          <button
+            onClick={() => setLeagueFilter(1)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+              leagueFilter === 1
+                ? 'bg-[#FFD700] text-white shadow-md'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            <div className="w-3 h-3 rounded-full bg-[#FFD700] border border-white/50" />
+            K리그1
+          </button>
+          <button
+            onClick={() => setLeagueFilter(2)}
+            className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
+              leagueFilter === 2
+                ? 'bg-[#C0C0C0] text-white shadow-md'
+                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+            }`}
+          >
+            <div className="w-3 h-3 rounded-full bg-[#C0C0C0] border border-white/50" />
+            K리그2
+          </button>
         </div>
       </div>
     </main>
