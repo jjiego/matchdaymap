@@ -67,10 +67,17 @@ export default function Home() {
 
   const handleGoHome = () => {
     // 전국 지도 보기 (기본 화면)
-    setMapCenter({ lat: 36.5, lng: 127.5 })
-    setMapLevel(13)
     setIsDrawerOpen(false)
     setSelectedStadium(null)
+
+    if (map) {
+      const moveLatLon = new window.kakao.maps.LatLng(36.5, 127.5)
+      map.setLevel(13)
+      map.panTo(moveLatLon)
+    } else {
+      setMapCenter({ lat: 36.5, lng: 127.5 })
+      setMapLevel(13)
+    }
   }
 
   const handleGoToMyLocation = () => {
@@ -152,9 +159,10 @@ export default function Home() {
 
       {/* League Filter Buttons - moves up when drawer is open */}
       <div
-        className={`absolute left-4 z-10 bg-white/95 backdrop-blur-sm rounded-xl p-2 shadow-lg transition-all duration-300 ${
+        className={`absolute left-4 z-10 rounded-xl p-2 shadow-lg transition-all duration-300 ${
           isDrawerOpen ? 'bottom-[calc(50vh+16px)]' : 'bottom-6'
         }`}
+        style={{ background: 'linear-gradient(to bottom, #dbeafe, #f0f9ff)' }}
       >
         <div className="flex flex-col gap-2">
           <button
@@ -162,7 +170,7 @@ export default function Home() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all ${
               leagueFilter === 'all'
                 ? 'bg-gradient-to-r from-[#FFD700] to-[#C0C0C0] text-white shadow-md'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                : 'bg-white/80 text-blue-700 hover:bg-white'
             }`}
           >
             전체
@@ -172,7 +180,7 @@ export default function Home() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
               leagueFilter === 1
                 ? 'bg-[#FFD700] text-white shadow-md'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                : 'bg-white/80 text-blue-700 hover:bg-white'
             }`}
           >
             <div className="w-3 h-3 rounded-full bg-[#FFD700] border border-white/50" />
@@ -183,7 +191,7 @@ export default function Home() {
             className={`px-4 py-2 rounded-lg text-sm font-medium transition-all flex items-center gap-2 ${
               leagueFilter === 2
                 ? 'bg-[#C0C0C0] text-white shadow-md'
-                : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                : 'bg-white/80 text-blue-700 hover:bg-white'
             }`}
           >
             <div className="w-3 h-3 rounded-full bg-[#C0C0C0] border border-white/50" />

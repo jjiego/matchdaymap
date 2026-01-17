@@ -69,6 +69,21 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
     return statusInfo || '예정'
   }
 
+  const getDaysUntilGame = (gameDateStr: string) => {
+    const [year, month, day] = gameDateStr.split('-')
+    const gameDate = new Date(Number(year), Number(month) - 1, Number(day))
+    const today = new Date()
+    today.setHours(0, 0, 0, 0)
+    gameDate.setHours(0, 0, 0, 0)
+
+    const diffTime = gameDate.getTime() - today.getTime()
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+    if (diffDays === 0) return 'Match Day !!!'
+    if (diffDays > 0) return `D-${diffDays}`
+    return null // 과거 경기
+  }
+
   const handleKakaoNavi = () => {
     const url = `kakaomap://route?ep=${stadium.location.lat},${stadium.location.lng}&by=CAR`
     window.location.href = url
@@ -178,6 +193,8 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                   const status = getGameStatus(game.status_code, game.status_info)
                   const isFinished = status === '종료'
                   const isLive = status === 'LIVE'
+                  const daysUntil = getDaysUntilGame(game.game_date)
+                  const isMatchDay = daysUntil === 'Match Day !!!'
 
                   return (
                     <div
@@ -194,10 +211,12 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                               ? 'bg-gray-500 text-white'
                               : isLive
                               ? 'bg-red-500 text-white animate-pulse'
+                              : isMatchDay
+                              ? 'bg-gradient-to-r from-yellow-400 to-orange-500 text-white animate-pulse'
                               : 'bg-blue-600 text-white'
                           }`}
                         >
-                          {status}
+                          {isFinished || isLive ? status : (daysUntil || status)}
                         </span>
                       </div>
                       <div className="flex items-center justify-between mb-2">
