@@ -42,14 +42,19 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
   if (!stadium) return null
 
   const formatDate = (dateStr: string) => {
-    const date = new Date(dateStr)
+    // DB에 저장된 날짜를 그대로 사용 (타임존 무시)
+    const [year, month, day] = dateStr.split('-')
+    const date = new Date(Number(year), Number(month) - 1, Number(day))
     return date.toLocaleDateString('ko-KR', { month: 'long', day: 'numeric', weekday: 'short' })
   }
 
   const formatTime = (dateTimeStr: string) => {
     if (!dateTimeStr) return ''
-    const date = new Date(dateTimeStr)
-    return date.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit', hour12: false })
+    // DB에 저장된 시간을 그대로 사용 (타임존 무시)
+    const timePart = dateTimeStr.includes('T') ? dateTimeStr.split('T')[1] : dateTimeStr.split(' ')[1]
+    if (!timePart) return ''
+    const [hour, minute] = timePart.split(':')
+    return `${hour}:${minute}`
   }
 
   const getGameStatus = (statusCode?: string, statusInfo?: string) => {
