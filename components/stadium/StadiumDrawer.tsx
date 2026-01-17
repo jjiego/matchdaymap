@@ -88,14 +88,17 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
     <>
       {/* Drawer - no backdrop to allow map interaction */}
       <div
-        className={`fixed bottom-0 left-0 right-0 bg-white rounded-t-3xl shadow-2xl z-50 transition-transform duration-300 ease-out ${
+        className={`fixed bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl z-50 transition-transform duration-300 ease-out ${
           isOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
-        style={{ maxHeight: '50vh' }}
+        style={{
+          maxHeight: '50vh',
+          background: 'linear-gradient(to bottom, #dbeafe, #f0f9ff)'
+        }}
       >
         {/* Handle Bar */}
         <div className="flex justify-center pt-3 pb-2">
-          <div className="w-12 h-1 bg-muted-foreground/30 rounded-full" />
+          <div className="w-12 h-1 bg-blue-300 rounded-full" />
         </div>
 
         {/* Content */}
@@ -103,9 +106,9 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
           {/* Close Button */}
           <button
             onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-secondary hover:bg-secondary/80 transition-colors"
+            className="absolute top-4 right-4 p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors"
           >
-            <X className="w-5 h-5" />
+            <X className="w-5 h-5 text-blue-700" />
           </button>
 
           {/* Team Logo or Fallback */}
@@ -143,17 +146,17 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
             >
               K리그{stadium.leagueType}
             </div>
-            <h2 className="text-2xl font-bold mb-2 text-gray-900">{stadium.teamName}</h2>
-            <p className="text-gray-600 text-sm font-medium">{stadium.fullName || stadium.name}</p>
+            <h2 className="text-2xl font-bold mb-2 text-blue-900">{stadium.teamName}</h2>
+            <p className="text-blue-700 text-sm font-medium">{stadium.fullName || stadium.name}</p>
           </div>
 
           {/* Address */}
-          <div className="mb-6 p-4 bg-gray-50 rounded-xl border border-gray-200">
+          <div className="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
             <div className="flex items-start gap-3">
               <MapPin className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
               <div>
-                <p className="text-sm font-semibold mb-1 text-gray-900">경기장 주소</p>
-                <p className="text-sm text-gray-600">{stadium.address}</p>
+                <p className="text-sm font-semibold mb-1 text-blue-900">경기장 주소</p>
+                <p className="text-sm text-blue-700">{stadium.address}</p>
               </div>
             </div>
           </div>
@@ -162,11 +165,11 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-4">
               <Calendar className="w-5 h-5 text-blue-600" />
-              <p className="text-base font-bold text-gray-900">경기 일정</p>
+              <p className="text-base font-bold text-blue-900">경기 일정</p>
             </div>
 
             {loadingGames ? (
-              <div className="text-center py-8 text-sm text-gray-500">
+              <div className="text-center py-8 text-sm text-blue-600">
                 경기 일정을 불러오는 중...
               </div>
             ) : games.length > 0 ? (
@@ -179,10 +182,10 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                   return (
                     <div
                       key={game.game_id}
-                      className="p-4 bg-white border-2 border-gray-200 rounded-xl hover:border-blue-300 hover:shadow-md transition-all"
+                      className="p-4 bg-white border-2 border-blue-200 rounded-xl hover:border-blue-400 hover:shadow-lg transition-all"
                     >
                       <div className="flex items-center justify-between mb-3">
-                        <span className="text-sm font-semibold text-gray-700">
+                        <span className="text-sm font-semibold text-blue-700">
                           {formatDate(game.game_date)} {formatTime(game.game_date_time)}
                         </span>
                         <span
@@ -191,7 +194,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                               ? 'bg-gray-500 text-white'
                               : isLive
                               ? 'bg-red-500 text-white animate-pulse'
-                              : 'bg-blue-500 text-white'
+                              : 'bg-blue-600 text-white'
                           }`}
                         >
                           {status}
@@ -199,24 +202,24 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                       </div>
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex-1 text-center">
-                          <p className="text-base font-bold text-gray-900">{game.home_team_name}</p>
+                          <p className="text-base font-bold text-blue-900">{game.home_team_name}</p>
                         </div>
                         <div className="px-4">
                           {isFinished ? (
-                            <span className="text-lg font-black text-gray-900">
+                            <span className="text-lg font-black text-blue-900">
                               {game.home_team_score ?? 0} : {game.away_team_score ?? 0}
                             </span>
                           ) : (
-                            <span className="text-base font-semibold text-gray-400">VS</span>
+                            <span className="text-base font-semibold text-blue-400">VS</span>
                           )}
                         </div>
                         <div className="flex-1 text-center">
-                          <p className="text-base font-bold text-gray-900">{game.away_team_name}</p>
+                          <p className="text-base font-bold text-blue-900">{game.away_team_name}</p>
                         </div>
                       </div>
                       {game.match_round && (
-                        <div className="mt-2 pt-2 border-t border-gray-100 text-center">
-                          <span className="text-xs font-semibold text-blue-600 bg-blue-50 px-2 py-1 rounded-full">
+                        <div className="mt-2 pt-2 border-t border-blue-100 text-center">
+                          <span className="text-xs font-semibold text-blue-700 bg-blue-100 px-2 py-1 rounded-full">
                             {game.match_round} 라운드
                           </span>
                         </div>
@@ -226,7 +229,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                 })}
               </div>
             ) : (
-              <div className="text-center py-8 text-sm text-gray-500 bg-gray-50 rounded-xl">
+              <div className="text-center py-8 text-sm text-blue-600 bg-blue-50 rounded-xl">
                 예정된 경기가 없습니다
               </div>
             )}
@@ -234,7 +237,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
 
           {/* Navigation Buttons */}
           <div className="space-y-2">
-            <p className="text-sm font-bold text-gray-900 mb-3">길찾기</p>
+            <p className="text-sm font-bold text-blue-900 mb-3">길찾기</p>
             <div className="grid grid-cols-3 gap-3">
               <button
                 onClick={handleKakaoNavi}
@@ -254,7 +257,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
 
               <button
                 onClick={handleWebMap}
-                className="p-4 bg-gray-700 hover:bg-gray-800 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center"
+                className="p-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center"
                 title="웹 지도"
               >
                 <span className="text-sm">지도</span>

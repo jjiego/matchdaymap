@@ -40,10 +40,9 @@ body {
   color: rgb(var(--foreground));
   background: linear-gradient(
       to bottom,
-      transparent,
-      rgb(var(--background))
-    )
-    rgb(var(--background));
+      #1e3a8a,
+      #1e40af
+    );
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
     'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
     sans-serif;
