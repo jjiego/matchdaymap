@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { getCoordinates, getMultipleCoordinates } from '@/lib/utils/addressSearch'
+import { getCoordinates, getMultipleCoordinates, searchKeyword, searchMultipleKeywords } from '@/lib/utils/addressSearch'
 import { K_LEAGUE_FULL_STADIUMS } from '@/lib/constants/stadiums'
 
 interface TestResult {
@@ -158,6 +158,49 @@ export default function AddressSearchTestPage() {
     }
   }
 
+  const handleSearchByKeyword = async () => {
+    setLoading(true)
+    setResults([])
+    try {
+      for (let i = 0; i < K_LEAGUE_FULL_STADIUMS.length; i++) {
+        try {
+          const stadium = K_LEAGUE_FULL_STADIUMS[i]
+          const fullName = stadium.fullName || stadium.name
+          const result = await searchKeyword(fullName)
+          setResults((prev) => [
+            ...prev,
+            {
+              address: result.address,
+              latitude: result.latitude,
+              longitude: result.longitude,
+              status: 'success' as const,
+              stadiumId: stadium.id,
+              stadiumName: fullName,
+              searchedAddress: stadium.address,
+            },
+          ])
+          // UI 업데이트 효과
+          await new Promise(resolve => setTimeout(resolve, 200))
+        } catch (error) {
+          const stadium = K_LEAGUE_FULL_STADIUMS[i]
+          setResults((prev) => [
+            ...prev,
+            {
+              address: stadium.address,
+              status: 'error' as const,
+              message: error instanceof Error ? error.message : '키워드 검색 실패',
+              stadiumId: stadium.id,
+              stadiumName: stadium.fullName || stadium.name,
+              searchedAddress: stadium.address,
+            },
+          ])
+        }
+      }
+    } finally {
+      setLoading(false)
+    }
+  }
+
   return (
     <main className="min-h-screen bg-gradient-to-b from-blue-50 to-blue-100 p-8">
       <div className="max-w-4xl mx-auto">
@@ -183,7 +226,7 @@ export default function AddressSearchTestPage() {
             </button>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
             <button
               onClick={handleTestAllStadiums}
               disabled={loading}
@@ -198,6 +241,16 @@ export default function AddressSearchTestPage() {
               className="px-6 py-4 bg-orange-600 text-white font-semibold rounded-lg hover:bg-orange-700 disabled:bg-gray-400 transition-colors flex items-center justify-center gap-2"
             >
               {loading ? '⏳ 로딩 중...' : `🏟️ fullName으로 검색`}
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 gap-4">
+            <button
+              onClick={handleSearchByKeyword}
+              disabled={loading}
+              className="px-6 py-4 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 disabled:bg-gray-400 transition-colors flex items-center justify-center gap-2"
+            >
+              {loading ? '⏳ 로딩 중...' : `🔑 키워드로 검색`}
             </button>
           </div>
         </div>

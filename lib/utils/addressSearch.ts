@@ -147,3 +147,59 @@ export const getMultipleCoordinates = async (
 
   return results
 }
+
+/**
+ * 키워드로 검색하여 최상단 결과의 좌표를 가져옵니다.
+ * @param keyword - 검색할 키워드 (예: '경기장명', '건물명')
+ * @returns Promise<CoordinateResult> - 첫 번째 검색 결과의 위도, 경도, 주소
+ */
+export const searchKeyword = async (
+  keyword: string
+): Promise<CoordinateResult> => {
+  await waitForKakaoMaps()
+
+  return new Promise((resolve, reject) => {
+    try {
+      const places = new window.kakao.maps.services.Places()
+
+      places.keywordSearch(keyword, (result: any, status: any) => {
+        if (status === window.kakao.maps.services.Status.OK && result.length > 0) {
+          const { y, x, place_name, address_name } = result[0]
+          resolve({
+            latitude: parseFloat(y),
+            longitude: parseFloat(x),
+            address: `${place_name} (${address_name})`,
+          })
+        } else {
+          reject(new Error(`검색 결과가 없습니다: ${keyword}`))
+        }
+      })
+    } catch (error) {
+      reject(error)
+    }
+  })
+}
+
+/**
+ * 여러 키워드를 일괄로 검색합니다.
+ * @param keywords - 검색할 키워드 배열
+ * @returns Promise<CoordinateResult[]> - 검색 결과 배열
+ */
+export const searchMultipleKeywords = async (
+  keywords: string[]
+): Promise<CoordinateResult[]> => {
+  const results: CoordinateResult[] = []
+
+  for (const keyword of keywords) {
+    try {
+      const result = await searchKeyword(keyword)
+      results.push(result)
+      // API 호출 간 짧은 딜레이 (rate limit 방지)
+      await new Promise(resolve => setTimeout(resolve, 100))
+    } catch (error) {
+      console.error(`키워드 검색 실패 (${keyword}):`, error)
+    }
+  }
+
+  return results
+}
