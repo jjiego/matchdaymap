@@ -23,7 +23,7 @@ export default function RootLayout({
       <head>
         <Script
           strategy="beforeInteractive"
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&autoload=false`}
+          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_API_KEY}&libraries=services&autoload=false`}
         />
       </head>
       <body className="min-h-screen antialiased">

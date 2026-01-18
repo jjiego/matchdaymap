@@ -2,8 +2,7 @@
 
 import { Stadium } from '@/lib/types/stadium'
 import { Game } from '@/lib/types/game'
-import { X, Navigation, MapPin, ExternalLink, Calendar } from 'lucide-react'
-import Image from 'next/image'
+import { X, MapPin, Calendar } from 'lucide-react'
 import { useState, useEffect } from 'react'
 import { getStadiumGames } from '@/lib/supabase/games'
 import { debugStadiumGamesAll, debugStadiumNames } from '@/lib/supabase/debug'
@@ -15,7 +14,6 @@ interface StadiumDrawerProps {
 }
 
 export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawerProps) {
-  const [imageError, setImageError] = useState(false)
   const [games, setGames] = useState<Game[]>([])
   const [loadingGames, setLoadingGames] = useState(false)
 
@@ -103,7 +101,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
     <>
       {/* Drawer - no backdrop to allow map interaction */}
       <div
-        className={`fixed bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl z-50 transition-transform duration-300 ease-out ${
+        className={`fixed bottom-0 left-0 right-0 rounded-t-3xl shadow-2xl z-50 transition-transform duration-300 ease-out flex flex-col ${
           isOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
         style={{
@@ -112,71 +110,39 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
         }}
       >
         {/* Handle Bar */}
-        <div className="flex justify-center pt-3 pb-2">
+        <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
           <div className="w-12 h-1 bg-blue-300 rounded-full" />
         </div>
 
-        {/* Content */}
-        <div className="px-6 pb-6 overflow-y-auto" style={{ maxHeight: 'calc(50vh - 60px)' }}>
-          {/* Close Button */}
-          <button
-            onClick={onClose}
-            className="absolute top-4 right-4 p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors"
-          >
-            <X className="w-5 h-5 text-blue-700" />
-          </button>
+        {/* Close Button */}
+        <button
+          onClick={onClose}
+          className="absolute top-4 right-4 p-2 rounded-full bg-blue-100 hover:bg-blue-200 transition-colors z-10"
+        >
+          <X className="w-5 h-5 text-blue-700" />
+        </button>
 
-          {/* Team Logo or Fallback */}
-          <div className="flex justify-center mb-6">
-            {stadium.logoUrl && !imageError ? (
-              <div className="relative w-24 h-24 rounded-full overflow-hidden bg-secondary/50 p-3">
-                <Image
-                  src={stadium.logoUrl}
-                  alt={`${stadium.teamName} 로고`}
-                  fill
-                  className="object-contain"
-                  onError={() => setImageError(true)}
-                />
-              </div>
-            ) : (
-              // Fallback: Team Color Icon
-              <div
-                className="w-24 h-24 rounded-full flex items-center justify-center shadow-lg"
-                style={{ backgroundColor: stadium.primaryColor }}
+        {/* Header - Fixed */}
+        <div className="px-6 pt-4 pb-4 flex-shrink-0 text-center border-b border-blue-200">
+          <div className="flex items-center justify-center gap-2 mb-2">
+            <h2 className="text-lg font-bold text-blue-900">{stadium.team?.name || '팀정보'}</h2>
+            {stadium.team?.officialUrl && (
+              <a
+                href={stadium.team.officialUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-blue-500 hover:bg-blue-600 transition-colors"
+                title="공식 홈페이지"
               >
-                <span className="text-3xl font-bold text-white drop-shadow-md">
-                  {stadium.teamShortName}
-                </span>
-              </div>
+                <span className="text-xs font-bold text-white">🌐</span>
+              </a>
             )}
           </div>
+          <p className="text-sm text-blue-700 font-medium">{stadium.fullName || stadium.name}</p>
+        </div>
 
-          {/* Team Info */}
-          <div className="text-center mb-6">
-            <div className="inline-block px-3 py-1 rounded-full text-xs font-semibold mb-3"
-              style={{
-                backgroundColor: stadium.leagueType === 1 ? '#FFD700' : '#C0C0C0',
-                color: '#000',
-              }}
-            >
-              K리그{stadium.leagueType}
-            </div>
-            <h2 className="text-2xl font-bold mb-2 text-blue-900">{stadium.teamName}</h2>
-            <p className="text-blue-700 text-sm font-medium">{stadium.fullName || stadium.name}</p>
-          </div>
-
-          {/* Address */}
-          <div className="mb-6 p-4 bg-blue-50 rounded-xl border border-blue-200">
-            <div className="flex items-start gap-3">
-              <MapPin className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
-              <div>
-                <p className="text-sm font-semibold mb-1 text-blue-900">경기장 주소</p>
-                <p className="text-sm text-blue-700">{stadium.address}</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Game Schedule */}
+        {/* Scrollable Content - Game Schedule */}
+        <div className="flex-1 overflow-y-auto px-6">
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-4">
               <Calendar className="w-5 h-5 text-blue-600" />
@@ -253,37 +219,49 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
               </div>
             )}
           </div>
+        </div>
 
-          {/* Navigation Buttons */}
-          <div className="space-y-2">
-            <p className="text-sm font-bold text-blue-900 mb-3">길찾기</p>
-            <div className="grid grid-cols-3 gap-3">
-              <button
-                onClick={handleKakaoNavi}
-                className="p-4 bg-[#FEE500] hover:bg-[#FFED4E] text-black font-bold rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center"
-                title="카카오내비"
-              >
-                <span className="text-sm">카카오</span>
-              </button>
+        {/* Footer - Fixed Address Section */}
+        <div className="px-6 pb-6 flex-shrink-0 border-t border-blue-200">
+          <div className="p-4 bg-blue-50 rounded-xl border border-blue-200 mt-4">
+            <div className="flex items-start gap-3 mb-4">
+              <MapPin className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />
+              <div>
+                <p className="text-sm font-semibold mb-1 text-blue-900">경기장 주소</p>
+                <p className="text-sm text-blue-700">{stadium.address}</p>
+              </div>
+            </div>
 
-              <button
-                onClick={handleNaverMap}
-                className="p-4 bg-[#03C75A] hover:bg-[#02B350] text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center"
-                title="네이버지도"
-              >
-                <span className="text-sm">네이버</span>
-              </button>
+            {/* Navigation Buttons */}
+            <div className="space-y-2">
+              <p className="text-xs font-bold text-blue-900 mb-2">길찾기</p>
+              <div className="grid grid-cols-3 gap-2">
+                <button
+                  onClick={handleKakaoNavi}
+                  className="p-3 bg-[#FEE500] hover:bg-[#FFED4E] text-black font-bold rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center text-xs"
+                  title="카카오내비"
+                >
+                  카카오
+                </button>
 
-              <button
-                onClick={handleWebMap}
-                className="p-4 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition-all shadow-md hover:shadow-lg flex items-center justify-center"
-                title="웹 지도"
-              >
-                <span className="text-sm">지도</span>
-              </button>
+                <button
+                  onClick={handleNaverMap}
+                  className="p-3 bg-[#03C75A] hover:bg-[#02B350] text-white font-bold rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center text-xs"
+                  title="네이버지도"
+                >
+                  네이버
+                </button>
+
+                <button
+                  onClick={handleWebMap}
+                  className="p-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-lg transition-all shadow-md hover:shadow-lg flex items-center justify-center text-xs"
+                  title="웹 지도"
+                >
+                  지도
+                </button>
+              </div>
             </div>
           </div>
-
         </div>
       </div>
     </>

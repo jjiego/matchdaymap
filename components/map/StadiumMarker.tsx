@@ -5,13 +5,13 @@ import { Stadium } from '@/lib/types/stadium'
 import { useState, useEffect } from 'react'
 import { getStadiumGames } from '@/lib/supabase/games'
 
-interface TeamMarkerProps {
+interface StadiumMarkerProps {
   stadium: Stadium
   onClick: (stadium: Stadium) => void
   isSelected?: boolean
 }
 
-export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerProps) {
+export default function StadiumMarker({ stadium, onClick, isSelected }: StadiumMarkerProps) {
   const [mounted, setMounted] = useState(false)
   const [daysUntilNextGame, setDaysUntilNextGame] = useState<string | null>(null)
 
@@ -48,18 +48,21 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
 
   if (!mounted) return null
 
+  const team = stadium.team
   const patternId = `pattern-${stadium.id}`
   const size = isSelected ? 56 : 48
 
-  // Render different patterns based on uniformPattern
+  // Render different patterns based on team's uniformPattern
   const renderPattern = () => {
-    switch (stadium.uniformPattern) {
+    if (!team) return null
+
+    switch (team.uniformPattern) {
       case 'vertical-stripe':
         return (
           <defs>
             <pattern id={patternId} x="0" y="0" width="10" height="48" patternUnits="userSpaceOnUse">
-              <rect x="0" y="0" width="5" height="48" fill={stadium.primaryColor} />
-              <rect x="5" y="0" width="5" height="48" fill={stadium.secondaryColor || '#ffffff'} />
+              <rect x="0" y="0" width="5" height="48" fill={team.primaryColor} />
+              <rect x="5" y="0" width="5" height="48" fill={team.secondaryColor || '#ffffff'} />
             </pattern>
           </defs>
         )
@@ -68,8 +71,8 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
         return (
           <defs>
             <pattern id={patternId} x="0" y="0" width="48" height="10" patternUnits="userSpaceOnUse">
-              <rect x="0" y="0" width="48" height="5" fill={stadium.primaryColor} />
-              <rect x="0" y="5" width="48" height="5" fill={stadium.secondaryColor || '#ffffff'} />
+              <rect x="0" y="0" width="48" height="5" fill={team.primaryColor} />
+              <rect x="0" y="5" width="48" height="5" fill={team.secondaryColor || '#ffffff'} />
             </pattern>
           </defs>
         )
@@ -78,8 +81,8 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
         return (
           <defs>
             <pattern id={patternId} x="0" y="0" width="14.14" height="14.14" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-              <rect x="0" y="0" width="7.07" height="14.14" fill={stadium.primaryColor} />
-              <rect x="7.07" y="0" width="7.07" height="14.14" fill={stadium.secondaryColor || '#ffffff'} />
+              <rect x="0" y="0" width="7.07" height="14.14" fill={team.primaryColor} />
+              <rect x="7.07" y="0" width="7.07" height="14.14" fill={team.secondaryColor || '#ffffff'} />
             </pattern>
           </defs>
         )
@@ -88,8 +91,8 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
         return (
           <defs>
             <radialGradient id={patternId} cx="50%" cy="50%" r="50%">
-              <stop offset="0%" stopColor={stadium.primaryColor} />
-              <stop offset="100%" stopColor={stadium.secondaryColor || stadium.primaryColor} />
+              <stop offset="0%" stopColor={team.primaryColor} />
+              <stop offset="100%" stopColor={team.secondaryColor || team.primaryColor} />
             </radialGradient>
           </defs>
         )
@@ -101,8 +104,9 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
   }
 
   const getFillColor = () => {
-    if (stadium.uniformPattern === 'solid' || !stadium.uniformPattern) {
-      return stadium.primaryColor
+    if (!team) return '#CCCCCC'
+    if (team.uniformPattern === 'solid' || !team.uniformPattern) {
+      return team.primaryColor
     }
     return `url(#${patternId})`
   }
@@ -123,19 +127,7 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
         }}
       >
         {/* SVG Marker with Team Color and Pattern */}
-        <div className="relative flex items-center gap-1">
-          {/* League Type Badge - Left Side */}
-          <div
-            className="rounded-full text-xs font-bold px-1.5 py-0.5 shadow-md"
-            style={{
-              backgroundColor: stadium.leagueType === 1 ? '#FFD700' : '#C0C0C0',
-              color: '#000',
-              fontSize: '8px',
-            }}
-          >
-            K{stadium.leagueType}
-          </div>
-
+        <div className="relative">
           <svg
             width={size}
             height={size}
@@ -152,7 +144,7 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
               cy="24"
               r="20"
               fill={getFillColor()}
-              stroke={isSelected ? '#ffffff' : (stadium.secondaryColor && stadium.uniformPattern === 'solid' ? stadium.secondaryColor : '#ffffff')}
+              stroke={isSelected ? '#ffffff' : (team && team.secondaryColor && team.uniformPattern === 'solid' ? team.secondaryColor : '#ffffff')}
               strokeWidth={isSelected ? '3' : '2'}
             />
 
@@ -164,8 +156,8 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
               fill="rgba(0,0,0,0.2)"
             />
 
-            {/* Team Name - Two Lines or Single */}
-            {stadium.teamDisplayLine1 && stadium.teamDisplayLine2 ? (
+            {/* Stadium Name - Two Lines or Single */}
+            {stadium.displayLine1 && stadium.displayLine2 ? (
               <>
                 <text
                   x="24"
@@ -179,7 +171,7 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
                   }}
                 >
-                  {stadium.teamDisplayLine1}
+                  {stadium.displayLine1}
                 </text>
                 <text
                   x="24"
@@ -193,7 +185,7 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
                     fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
                   }}
                 >
-                  {stadium.teamDisplayLine2}
+                  {stadium.displayLine2}
                 </text>
               </>
             ) : (
@@ -209,19 +201,35 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
                   fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
                 }}
               >
-                {stadium.teamShortName}
+                {stadium.name.split(' ')[0]}
               </text>
             )}
           </svg>
 
-          {/* D-Day Badge - Right Side */}
+          {/* League Type Badge - Top Left */}
+          <div
+            className="absolute rounded-full text-xs font-bold px-1.5 py-0.5 shadow-md"
+            style={{
+              backgroundColor: team && team.leagueType === 1 ? '#FFD700' : '#C0C0C0',
+              color: '#000',
+              fontSize: '8px',
+              top: '-8px',
+              left: '-8px',
+            }}
+          >
+            K{team?.leagueType || 1}
+          </div>
+
+          {/* D-Day Badge - Top Right */}
           {daysUntilNextGame && (
             <div
-              className="rounded-full text-xs font-bold px-1.5 py-0.5 shadow-md"
+              className="absolute rounded-full text-xs font-bold px-1.5 py-0.5 shadow-md"
               style={{
                 backgroundColor: daysUntilNextGame === 'TODAY' ? '#FF6B35' : '#3B82F6',
                 color: '#fff',
                 fontSize: '8px',
+                top: '-8px',
+                right: '-8px',
               }}
             >
               {daysUntilNextGame}
@@ -231,15 +239,16 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
 
         {/* Pointer Triangle */}
         <div
-          className="absolute -translate-x-1/2"
           style={{
-            left: 'calc(50% - 8px)',
-            bottom: '-12px',
+            position: 'absolute',
+            left: '50%',
+            bottom: 'calc(-12px - ' + (size / 2) + 'px)',
+            transform: 'translateX(-50%)',
             width: 0,
             height: 0,
             borderLeft: '8px solid transparent',
             borderRight: '8px solid transparent',
-            borderTop: `12px solid ${stadium.uniformPattern === 'solid' || !stadium.uniformPattern ? stadium.primaryColor : stadium.primaryColor}`,
+            borderTop: `12px solid ${team ? team.primaryColor : '#CCCCCC'}`,
             filter: 'drop-shadow(0 2px 2px rgba(0,0,0,0.3))',
           }}
         />

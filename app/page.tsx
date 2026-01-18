@@ -2,9 +2,9 @@
 
 import { useState, useEffect } from 'react'
 import { Map, CustomOverlayMap } from 'react-kakao-maps-sdk'
-import TeamMarker from '@/components/map/TeamMarker'
+import StadiumMarker from '@/components/map/StadiumMarker'
 import StadiumDrawer from '@/components/stadium/StadiumDrawer'
-import { K_LEAGUE_FULL_STADIUMS } from '@/lib/constants/stadiums'
+import { K_LEAGUE_STADIUMS_WITH_TEAMS } from '@/lib/constants/stadiums'
 import { Stadium } from '@/lib/types/stadium'
 import { Map as MapIcon, Navigation } from 'lucide-react'
 import { debugStadiumNames } from '@/lib/supabase/debug'
@@ -36,12 +36,12 @@ export default function Home() {
     // 디버그: DB의 모든 경기장 이름 출력
     debugStadiumNames().then(() => {
       console.log('=== 앱에 등록된 경기장 이름 ===')
-      K_LEAGUE_FULL_STADIUMS.forEach(s => console.log(s.name))
+      K_LEAGUE_STADIUMS_WITH_TEAMS.forEach((s: Stadium) => console.log(s.name))
     })
   }, [])
 
   const handleMarkerClick = (stadium: Stadium) => {
-    console.log('Marker clicked:', stadium.teamName, 'Location:', stadium.location)
+    console.log('Marker clicked:', stadium.team?.name, 'Location:', stadium.location)
     setSelectedStadium(stadium)
     setIsDrawerOpen(true)
 
@@ -125,11 +125,11 @@ export default function Home() {
         isPanto={true}
         onCreate={setMap}
       >
-        {K_LEAGUE_FULL_STADIUMS.filter((stadium) => {
+        {K_LEAGUE_STADIUMS_WITH_TEAMS.filter((stadium) => {
           if (leagueFilter === 'all') return true
-          return stadium.leagueType === leagueFilter
+          return stadium.team?.leagueType === leagueFilter
         }).map((stadium) => (
-          <TeamMarker
+          <StadiumMarker
             key={stadium.id}
             stadium={stadium}
             onClick={handleMarkerClick}
