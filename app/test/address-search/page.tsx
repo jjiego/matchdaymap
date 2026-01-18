@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { getCoordinates } from '@/lib/utils/addressSearch'
+import { getCoordinates, getMultipleCoordinates } from '@/lib/utils/addressSearch'
 import { K_LEAGUE_FULL_STADIUMS } from '@/lib/constants/stadiums'
 
 interface TestResult {
