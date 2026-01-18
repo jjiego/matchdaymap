@@ -3,6 +3,7 @@
 import { CustomOverlayMap } from 'react-kakao-maps-sdk'
 import { Stadium } from '@/lib/types/stadium'
 import { useState, useEffect } from 'react'
+import { getStadiumGames } from '@/lib/supabase/games'
 
 interface TeamMarkerProps {
   stadium: Stadium
@@ -12,10 +13,38 @@ interface TeamMarkerProps {
 
 export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerProps) {
   const [mounted, setMounted] = useState(false)
+  const [daysUntilNextGame, setDaysUntilNextGame] = useState<string | null>(null)
 
   useEffect(() => {
     setMounted(true)
   }, [])
+
+  useEffect(() => {
+    const fetchNextGameDays = async () => {
+      const games = await getStadiumGames(stadium.name, 1)
+      if (games.length > 0) {
+        const gameDate = games[0].game_date
+        const [year, month, day] = gameDate.split('-')
+        const nextGameDate = new Date(Number(year), Number(month) - 1, Number(day))
+        const today = new Date()
+        today.setHours(0, 0, 0, 0)
+        nextGameDate.setHours(0, 0, 0, 0)
+
+        const diffTime = nextGameDate.getTime() - today.getTime()
+        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+
+        if (diffDays === 0) {
+          setDaysUntilNextGame('TODAY')
+        } else if (diffDays > 0) {
+          setDaysUntilNextGame(`D-${diffDays}`)
+        }
+      }
+    }
+
+    if (mounted) {
+      fetchNextGameDays()
+    }
+  }, [mounted, stadium.name])
 
   if (!mounted) return null
 
@@ -94,7 +123,19 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
         }}
       >
         {/* SVG Marker with Team Color and Pattern */}
-        <div className="relative">
+        <div className="relative flex items-center gap-1">
+          {/* League Type Badge - Left Side */}
+          <div
+            className="rounded-full text-xs font-bold px-1.5 py-0.5 shadow-md"
+            style={{
+              backgroundColor: stadium.leagueType === 1 ? '#FFD700' : '#C0C0C0',
+              color: '#000',
+              fontSize: '8px',
+            }}
+          >
+            K{stadium.leagueType}
+          </div>
+
           <svg
             width={size}
             height={size}
@@ -173,23 +214,27 @@ export default function TeamMarker({ stadium, onClick, isSelected }: TeamMarkerP
             )}
           </svg>
 
-          {/* League Type Badge */}
-          <div
-            className="absolute -top-1 -right-1 rounded-full text-xs font-bold px-1.5 py-0.5 shadow-md"
-            style={{
-              backgroundColor: stadium.leagueType === 1 ? '#FFD700' : '#C0C0C0',
-              color: '#000',
-              fontSize: '8px',
-            }}
-          >
-            K{stadium.leagueType}
-          </div>
+          {/* D-Day Badge - Right Side */}
+          {daysUntilNextGame && (
+            <div
+              className="rounded-full text-xs font-bold px-1.5 py-0.5 shadow-md"
+              style={{
+                backgroundColor: daysUntilNextGame === 'TODAY' ? '#FF6B35' : '#3B82F6',
+                color: '#fff',
+                fontSize: '8px',
+              }}
+            >
+              {daysUntilNextGame}
+            </div>
+          )}
         </div>
 
         {/* Pointer Triangle */}
         <div
-          className="absolute left-1/2 -translate-x-1/2"
+          className="absolute -translate-x-1/2"
           style={{
+            left: 'calc(50% - 8px)',
+            bottom: '-12px',
             width: 0,
             height: 0,
             borderLeft: '8px solid transparent',

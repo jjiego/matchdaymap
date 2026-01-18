@@ -55,7 +55,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamName: '포항 스틸러스',
     teamShortName: '포항',
     teamDisplayLine1: '포항',
-    teamDisplayLine2: '스틸',
+    teamDisplayLine2: '스틸러스',
     location: { lat: 35.997701, lng: 129.384351 },
     primaryColor: '#000000', // 검정
     secondaryColor: '#E2231A', // 레드
@@ -190,7 +190,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamName: '부산 아이파크',
     teamShortName: '부산',
     teamDisplayLine1: '부산',
-    teamDisplayLine2: '아이',
+    teamDisplayLine2: '아이파크',
     location: { lat: 35.190101, lng: 129.058351 },
     primaryColor: '#C8102E', // 레드
     secondaryColor: '#FFFFFF', // 화이트
@@ -205,7 +205,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamName: '인천 유나이티드',
     teamShortName: '인천',
     teamDisplayLine1: '인천',
-    teamDisplayLine2: '유나',
+    teamDisplayLine2: 'UTD',
     location: { lat: 37.466021, lng: 126.643051 },
     primaryColor: '#000000', // 검정
     secondaryColor: '#0066B3', // 파랑
@@ -265,7 +265,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamDisplayLine2: '삼성',
     location: { lat: 37.286511, lng: 127.036851 },
     primaryColor: '#0066CC', // 블루
-    secondaryColor: '#FF0000', // 레드
+    secondaryColor: '#0066CC', // 블루
     uniformPattern: 'gradient',
     leagueType: 2,
     address: '경기 수원 팔달구 월드컵로 310',
@@ -275,8 +275,8 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     name: '목동종합운동장',
     teamName: '서울 이랜드 FC',
     teamShortName: '서울E',
-    teamDisplayLine1: '서울E',
-    teamDisplayLine2: 'FC',
+    teamDisplayLine1: '서울',
+    teamDisplayLine2: '이랜드',
     location: { lat: 37.530611, lng: 126.883021 },
     primaryColor: '#003478', // 네이비
     secondaryColor: '#FFD700', // 골드
@@ -290,7 +290,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamName: '전남 드래곤즈',
     teamShortName: '전남',
     teamDisplayLine1: '전남',
-    teamDisplayLine2: '드래곤',
+    teamDisplayLine2: '드래곤즈',
     location: { lat: 34.933151, lng: 127.727501 },
     primaryColor: '#FFD700', // 옐로우
     secondaryColor: '#000000', // 검정
@@ -346,7 +346,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamName: '파주 프런티어',
     teamShortName: '파주',
     teamDisplayLine1: '파주',
-    teamDisplayLine2: '프런',
+    teamDisplayLine2: '프런티어',
     location: { lat: 37.756151, lng: 126.786521 },
     primaryColor: '#FF6600', // 오렌지
     secondaryColor: '#000000',
@@ -402,7 +402,7 @@ export const K_LEAGUE_FULL_STADIUMS: Stadium[] = [
     teamName: '안산 그리너스',
     teamShortName: '안산',
     teamDisplayLine1: '안산',
-    teamDisplayLine2: '그린',
+    teamDisplayLine2: '그리너스',
     location: { lat: 37.3218, lng: 126.8308 },
     primaryColor: '#00A651', // 녹색
     secondaryColor: '#FFFFFF',
