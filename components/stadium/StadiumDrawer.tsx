@@ -16,6 +16,7 @@ interface StadiumDrawerProps {
 export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawerProps) {
   const [games, setGames] = useState<Game[]>([])
   const [loadingGames, setLoadingGames] = useState(false)
+  const [failedImages, setFailedImages] = useState<Set<string>>(new Set())
 
   // Fetch games when stadium changes
   useEffect(() => {
@@ -31,7 +32,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
       // 디버깅: 해당 경기장의 모든 경기 확인 (날짜 필터 없이)
       debugStadiumGamesAll(stadium.name)
 
-      getStadiumGames(stadium.name, 5)
+      getStadiumGames(stadium.name, 1000)
         .then(setGames)
         .finally(() => setLoadingGames(false))
     }
@@ -187,22 +188,23 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                       </div>
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex-1 flex flex-col items-center gap-2">
-                          {game.home_team_emblem_url ? (
+                          {game.home_team_emblem_url && !failedImages.has(`home-${game.game_id}`) ? (
                             <img
                               src={`/api/proxy-image?url=${encodeURIComponent(game.home_team_emblem_url)}`}
                               alt={game.home_team_name}
                               className="w-10 h-10 object-contain"
-                              onLoad={() => console.log('✅ Home emblem loaded:', game.home_team_emblem_url)}
-                              onError={() => console.error('❌ Home emblem failed:', game.home_team_emblem_url)}
+                              onError={() => {
+                                setFailedImages(prev => new Set(prev).add(`home-${game.game_id}`))
+                              }}
                             />
                           ) : (
                             <div className="w-10 h-10 bg-blue-100 border border-blue-300 rounded flex items-center justify-center">
-                              <span className="text-xs text-blue-400">No Logo</span>
+                              <span className="text-xs text-blue-400 text-center leading-none">No Logo</span>
                             </div>
                           )}
                           <p className="text-sm font-bold text-blue-900">{game.home_team_name}</p>
                         </div>
-                        <div className="px-4 flex flex-col items-center gap-1">
+                        <div className="px-4 flex flex-col items-center gap-2">
                           {game.match_round && (
                             <span className="text-xs font-semibold text-blue-700 bg-blue-100 px-2 py-1 rounded-full">
                               {game.match_round} Round
@@ -215,19 +217,28 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                           ) : (
                             <span className="text-base font-semibold text-blue-400">VS</span>
                           )}
+                          <a
+                            href={`https://m.sports.naver.com/game/${game.game_id}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-xs font-semibold text-white bg-green-600 hover:bg-green-700 px-3 py-1 rounded-full transition-colors"
+                          >
+                            네이버 중계
+                          </a>
                         </div>
                         <div className="flex-1 flex flex-col items-center gap-2">
-                          {game.away_team_emblem_url ? (
+                          {game.away_team_emblem_url && !failedImages.has(`away-${game.game_id}`) ? (
                             <img
                               src={`/api/proxy-image?url=${encodeURIComponent(game.away_team_emblem_url)}`}
                               alt={game.away_team_name}
                               className="w-10 h-10 object-contain"
-                              onLoad={() => console.log('✅ Away emblem loaded:', game.away_team_emblem_url)}
-                              onError={() => console.error('❌ Away emblem failed:', game.away_team_emblem_url)}
+                              onError={() => {
+                                setFailedImages(prev => new Set(prev).add(`away-${game.game_id}`))
+                              }}
                             />
                           ) : (
                             <div className="w-10 h-10 bg-blue-100 border border-blue-300 rounded flex items-center justify-center">
-                              <span className="text-xs text-blue-400">No Logo</span>
+                              <span className="text-xs text-blue-400 text-center leading-none">No Logo</span>
                             </div>
                           )}
                           <p className="text-sm font-bold text-blue-900">{game.away_team_name}</p>
