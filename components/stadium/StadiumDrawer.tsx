@@ -187,7 +187,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                       </div>
                       <div className="flex items-center justify-between mb-2">
                         <div className="flex-1 flex flex-col items-center gap-2">
-                          {game.home_team_emblem_url && (
+                          {game.home_team_emblem_url ? (
                             <img
                               src={`/api/proxy-image?url=${encodeURIComponent(game.home_team_emblem_url)}`}
                               alt={game.home_team_name}
@@ -195,10 +195,19 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                               onLoad={() => console.log('✅ Home emblem loaded:', game.home_team_emblem_url)}
                               onError={() => console.error('❌ Home emblem failed:', game.home_team_emblem_url)}
                             />
+                          ) : (
+                            <div className="w-10 h-10 bg-blue-100 border border-blue-300 rounded flex items-center justify-center">
+                              <span className="text-xs text-blue-400">No Logo</span>
+                            </div>
                           )}
                           <p className="text-sm font-bold text-blue-900">{game.home_team_name}</p>
                         </div>
-                        <div className="px-4">
+                        <div className="px-4 flex flex-col items-center gap-1">
+                          {game.match_round && (
+                            <span className="text-xs font-semibold text-blue-700 bg-blue-100 px-2 py-1 rounded-full">
+                              {game.match_round} Round
+                            </span>
+                          )}
                           {isFinished ? (
                             <span className="text-lg font-black text-blue-900">
                               {game.home_team_score ?? 0} : {game.away_team_score ?? 0}
@@ -208,7 +217,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                           )}
                         </div>
                         <div className="flex-1 flex flex-col items-center gap-2">
-                          {game.away_team_emblem_url && (
+                          {game.away_team_emblem_url ? (
                             <img
                               src={`/api/proxy-image?url=${encodeURIComponent(game.away_team_emblem_url)}`}
                               alt={game.away_team_name}
@@ -216,17 +225,14 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                               onLoad={() => console.log('✅ Away emblem loaded:', game.away_team_emblem_url)}
                               onError={() => console.error('❌ Away emblem failed:', game.away_team_emblem_url)}
                             />
+                          ) : (
+                            <div className="w-10 h-10 bg-blue-100 border border-blue-300 rounded flex items-center justify-center">
+                              <span className="text-xs text-blue-400">No Logo</span>
+                            </div>
                           )}
                           <p className="text-sm font-bold text-blue-900">{game.away_team_name}</p>
                         </div>
                       </div>
-                      {game.match_round && (
-                        <div className="mt-2 pt-2 border-t border-blue-100 text-center">
-                          <span className="text-xs font-semibold text-blue-700 bg-blue-100 px-2 py-1 rounded-full">
-                            {game.match_round} 라운드
-                          </span>
-                        </div>
-                      )}
                     </div>
                   )
                 })}
