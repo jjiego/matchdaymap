@@ -186,8 +186,17 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                         </span>
                       </div>
                       <div className="flex items-center justify-between mb-2">
-                        <div className="flex-1 text-center">
-                          <p className="text-base font-bold text-blue-900">{game.home_team_name}</p>
+                        <div className="flex-1 flex flex-col items-center gap-2">
+                          {game.home_team_emblem_url && (
+                            <img
+                              src={`/api/proxy-image?url=${encodeURIComponent(game.home_team_emblem_url)}`}
+                              alt={game.home_team_name}
+                              className="w-10 h-10 object-contain"
+                              onLoad={() => console.log('✅ Home emblem loaded:', game.home_team_emblem_url)}
+                              onError={() => console.error('❌ Home emblem failed:', game.home_team_emblem_url)}
+                            />
+                          )}
+                          <p className="text-sm font-bold text-blue-900">{game.home_team_name}</p>
                         </div>
                         <div className="px-4">
                           {isFinished ? (
@@ -198,8 +207,17 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
                             <span className="text-base font-semibold text-blue-400">VS</span>
                           )}
                         </div>
-                        <div className="flex-1 text-center">
-                          <p className="text-base font-bold text-blue-900">{game.away_team_name}</p>
+                        <div className="flex-1 flex flex-col items-center gap-2">
+                          {game.away_team_emblem_url && (
+                            <img
+                              src={`/api/proxy-image?url=${encodeURIComponent(game.away_team_emblem_url)}`}
+                              alt={game.away_team_name}
+                              className="w-10 h-10 object-contain"
+                              onLoad={() => console.log('✅ Away emblem loaded:', game.away_team_emblem_url)}
+                              onError={() => console.error('❌ Away emblem failed:', game.away_team_emblem_url)}
+                            />
+                          )}
+                          <p className="text-sm font-bold text-blue-900">{game.away_team_name}</p>
                         </div>
                       </div>
                       {game.match_round && (
