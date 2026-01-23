@@ -17,6 +17,7 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
   const [games, setGames] = useState<Game[]>([])
   const [loadingGames, setLoadingGames] = useState(false)
   const [failedImages, setFailedImages] = useState<Set<string>>(new Set())
+  const [drawerHeight, setDrawerHeight] = useState(25) // 팝업 높이 (vh 단위, 기본값 25%)
 
   // Fetch games when stadium changes
   useEffect(() => {
@@ -98,6 +99,25 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
     window.open(url, '_blank')
   }
 
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const startY = e.clientY
+    const startHeight = drawerHeight
+
+    const handleMouseMove = (moveEvent: MouseEvent) => {
+      const deltaY = startY - moveEvent.clientY
+      const newHeight = Math.max(30, Math.min(90, startHeight + (deltaY / window.innerHeight) * 100))
+      setDrawerHeight(newHeight)
+    }
+
+    const handleMouseUp = () => {
+      document.removeEventListener('mousemove', handleMouseMove)
+      document.removeEventListener('mouseup', handleMouseUp)
+    }
+
+    document.addEventListener('mousemove', handleMouseMove)
+    document.addEventListener('mouseup', handleMouseUp)
+  }
+
   return (
     <>
       {/* Drawer - no backdrop to allow map interaction */}
@@ -106,13 +126,16 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
           isOpen ? 'translate-y-0' : 'translate-y-full'
         }`}
         style={{
-          maxHeight: '50vh',
+          maxHeight: `${drawerHeight}vh`,
           background: 'linear-gradient(to bottom, #dbeafe, #f0f9ff)'
         }}
       >
-        {/* Handle Bar */}
-        <div className="flex justify-center pt-3 pb-2 flex-shrink-0">
-          <div className="w-12 h-1 bg-blue-300 rounded-full" />
+        {/* Handle Bar - Draggable */}
+        <div
+          className="flex justify-center pt-3 pb-2 flex-shrink-0 cursor-ns-resize select-none"
+          onMouseDown={handleMouseDown}
+        >
+          <div className="w-12 h-1 bg-blue-300 rounded-full hover:bg-blue-400 transition-colors" />
         </div>
 
         {/* Close Button */}
@@ -125,8 +148,9 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
 
         {/* Header - Fixed */}
         <div className="px-6 pt-4 pb-4 flex-shrink-0 text-center border-b border-blue-200">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <h2 className="text-lg font-bold text-blue-900">{stadium.team?.name || '팀정보'}</h2>
+          <p className="text-sm text-blue-700 font-medium mb-2">{stadium.fullName || stadium.name}</p>
+          <div className="flex items-center justify-center gap-2">
+            <h2 className="text-lg font-bold text-blue-900">홈팀: {stadium.team?.name || '팀정보'}</h2>
             {stadium.team?.officialUrl && (
               <a
                 href={stadium.team.officialUrl}
@@ -139,7 +163,6 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
               </a>
             )}
           </div>
-          <p className="text-sm text-blue-700 font-medium">{stadium.fullName || stadium.name}</p>
         </div>
 
         {/* Scrollable Content - Game Schedule */}
@@ -256,8 +279,8 @@ export default function StadiumDrawer({ stadium, isOpen, onClose }: StadiumDrawe
           </div>
         </div>
 
-        {/* Footer - Fixed Address Section */}
-        <div className="px-6 pb-6 flex-shrink-0 border-t border-blue-200">
+        {/* Footer - Fixed Address Section (Hidden) */}
+        <div className="hidden px-6 pb-6 flex-shrink-0 border-t border-blue-200">
           <div className="p-4 bg-blue-50 rounded-xl border border-blue-200 mt-4">
             <div className="flex items-start gap-3 mb-4">
               <MapPin className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" />

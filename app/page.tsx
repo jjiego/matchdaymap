@@ -8,15 +8,49 @@ import { K_LEAGUE_STADIUMS_WITH_TEAMS } from '@/lib/constants/stadiums'
 import { Stadium } from '@/lib/types/stadium'
 import { Map as MapIcon, Navigation } from 'lucide-react'
 import { debugStadiumNames } from '@/lib/supabase/debug'
+import { useAuth } from '@/lib/hooks/useAuth'
+import LoginButton from '@/components/auth/LoginButton'
+import UserAvatar from '@/components/auth/UserAvatar'
+import TeamSelector from '@/components/auth/TeamSelector'
+import Toast from '@/components/ui/Toast'
 
 export default function Home() {
   const [selectedStadium, setSelectedStadium] = useState<Stadium | null>(null)
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
   const [mapCenter, setMapCenter] = useState({ lat: 36.5, lng: 127.5 })
   const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null)
-  const [mapLevel, setMapLevel] = useState(13)
+  const [mapLevel, setMapLevel] = useState(12)
   const [map, setMap] = useState<any>(null)
   const [leagueFilter, setLeagueFilter] = useState<'all' | 1 | 2>('all')
+  const [showToast, setShowToast] = useState(false)
+  const [toastMessage, setToastMessage] = useState('')
+  const [showTeamSelector, setShowTeamSelector] = useState(false)
+  const [mapLoading, setMapLoading] = useState(true)
+  const [drawerHeight, setDrawerHeight] = useState(25)
+  const { user, profile, loading: authLoading } = useAuth()
+
+  // 초기 렌더링 완료 후 지도 표시 (페이드인 애니메이션)
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (mapLoading) {
+        console.log('Map still loading after 5s, forcing display')
+        setMapLoading(false)
+      }
+    }, 5000)
+    return () => clearTimeout(timer)
+  }, [mapLoading])
+
+  // 첫 로그인 시 팀 선택 모달 표시
+  useEffect(() => {
+    if (user && profile && !profile.favorite_team_id) {
+      setShowTeamSelector(true)
+    }
+  }, [user, profile])
+
+  const showLoginToast = () => {
+    setToastMessage('로그인이 필요합니다')
+    setShowToast(true)
+  }
 
   // Get user's current location
   useEffect(() => {
@@ -61,7 +95,7 @@ export default function Home() {
 
   const handleCloseDrawer = () => {
     setIsDrawerOpen(false)
-    setMapLevel(13)
+    setMapLevel(12)
     setTimeout(() => setSelectedStadium(null), 300)
   }
 
@@ -72,11 +106,11 @@ export default function Home() {
 
     if (map) {
       const moveLatLon = new window.kakao.maps.LatLng(36.5, 127.5)
-      map.setLevel(13)
+      map.setLevel(12)
       map.panTo(moveLatLon)
     } else {
       setMapCenter({ lat: 36.5, lng: 127.5 })
-      setMapLevel(13)
+      setMapLevel(12)
     }
   }
 
@@ -96,23 +130,28 @@ export default function Home() {
             <h1 className="text-2xl font-bold text-white drop-shadow-lg">매치데이맵</h1>
             <p className="text-sm text-white/80 drop-shadow">K리그 직관 가이드</p>
           </div>
-          <div className="flex flex-col gap-2">
-            <button
-              onClick={handleGoHome}
-              className="p-3 bg-white backdrop-blur-sm rounded-full shadow-lg hover:bg-gray-100 transition-colors"
-              title="메인화면으로 이동"
-            >
-              <MapIcon className="w-5 h-5 text-gray-700" />
-            </button>
-            {userLocation && (
+          <div className="flex items-center gap-2">
+            {/* 로그인/프로필 버튼 */}
+            {!authLoading && (user ? <UserAvatar /> : <LoginButton />)}
+
+            <div className="flex flex-col gap-2">
               <button
-                onClick={handleGoToMyLocation}
-                className="p-3 bg-blue-500 backdrop-blur-sm rounded-full shadow-lg hover:bg-blue-600 transition-colors"
-                title="현재 위치로 이동"
+                onClick={handleGoHome}
+                className="p-3 bg-white backdrop-blur-sm rounded-full shadow-lg hover:bg-gray-100 transition-colors"
+                title="메인화면으로 이동"
               >
-                <Navigation className="w-5 h-5 text-white" />
+                <MapIcon className="w-5 h-5 text-gray-700" />
               </button>
-            )}
+              {userLocation && (
+                <button
+                  onClick={handleGoToMyLocation}
+                  className="p-3 bg-blue-500 backdrop-blur-sm rounded-full shadow-lg hover:bg-blue-600 transition-colors"
+                  title="현재 위치로 이동"
+                >
+                  <Navigation className="w-5 h-5 text-white" />
+                </button>
+              )}
+            </div>
           </div>
         </div>
       </div>
@@ -120,10 +159,17 @@ export default function Home() {
       {/* Map */}
       <Map
         center={mapCenter}
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '100%', height: '100%', opacity: mapLoading ? 0 : 1, transition: 'opacity 0.8s ease-in-out' }}
         level={mapLevel}
         isPanto={true}
-        onCreate={setMap}
+        onCreate={(mapInstance) => {
+          console.log('Map created, setting mapLoading to false')
+          setMap(mapInstance)
+          // 렌더링 완료 후 페이드인 시작
+          requestAnimationFrame(() => {
+            setMapLoading(false)
+          })
+        }}
       >
         {K_LEAGUE_STADIUMS_WITH_TEAMS.filter((stadium) => {
           if (leagueFilter === 'all') return true
@@ -199,6 +245,14 @@ export default function Home() {
           </button>
         </div>
       </div>
+
+      {/* 토스트 알림 */}
+      {showToast && (
+        <Toast message={toastMessage} onClose={() => setShowToast(false)} />
+      )}
+
+      {/* 팀 선택 모달 */}
+      <TeamSelector isOpen={showTeamSelector} onClose={() => setShowTeamSelector(false)} />
     </main>
   )
 }
